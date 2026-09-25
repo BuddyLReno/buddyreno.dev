@@ -1,0 +1,23 @@
+/* Shiki `css-variables` theme → Rivendell tokens (markdown code blocks and <Code />). */
+:root,
+[data-rvd-tone] {
+  --astro-code-foreground: var(--rvd-ink);
+  --astro-code-background: var(--rvd-surface);
+  --astro-code-token-constant: var(--rvd-accent-text);
+  --astro-code-token-string: var(--rvd-accent-2-text);
+  --astro-code-token-comment: var(--rvd-muted);
+  --astro-code-token-keyword: var(--rvd-accent-text);
+  --astro-code-token-parameter: var(--rvd-ink);
+  --astro-code-token-function: var(--rvd-accent-2-text);
+  --astro-code-token-string-expression: var(--rvd-accent-2-text);
+  --astro-code-token-punctuation: var(--rvd-muted);
+  --astro-code-token-link: var(--rvd-accent-text);
+}
+
+.astro-code {
+  padding: 16px 18px;
+  border-radius: var(--rvd-radius-lg);
+  font-family: var(--rvd-font-mono);
+  font-size: 14px;
+  line-height: 1.6;
+}

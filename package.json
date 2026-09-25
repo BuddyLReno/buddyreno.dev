@@ -2,11 +2,8 @@
   "name": "buddyreno.dev",
   "version": "1.0.0",
   "description": "Personal site of Buddy Reno",
-  "directories": {
-    "doc": "docs"
-  },
   "scripts": {
-    "test": "vitest run",
+    "test": "TZ=America/Chicago vitest run",
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
@@ -19,11 +16,8 @@
     "url": "git+https://github.com/BuddyLReno/buddyreno.dev.git"
   },
   "type": "module",
-  "bugs": {
-    "url": "https://github.com/BuddyLReno/buddyreno.dev/issues"
-  },
-  "homepage": "https://github.com/BuddyLReno/buddyreno.dev#readme",
-  "private": "true",
+  "homepage": "https://buddyreno.dev",
+  "private": true,
   "engines": {
     "node": ">=22.12.0"
   },

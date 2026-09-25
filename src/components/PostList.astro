@@ -1,0 +1,37 @@
+---
+import { formatDate, type PostSummary } from '../lib/format';
+import LabelList from './LabelList.astro';
+import LabelRow from './LabelRow.astro';
+
+interface Props {
+  posts: PostSummary[];
+  empty?: string;
+}
+
+const { posts, empty = 'Nothing here yet.' } = Astro.props;
+---
+{
+  posts.length === 0 ? (
+    <p class="rvd-post-list__empty">{empty}</p>
+  ) : (
+    <LabelList>
+      {posts.map((post) => (
+        <LabelRow label={formatDate(post.date)}>
+          <a href={post.href}>{post.title}</a>
+          {post.description && <span class="rvd-post-list__description"> · {post.description}</span>}
+        </LabelRow>
+      ))}
+    </LabelList>
+  )
+}
+
+<style>
+  .rvd-post-list__empty,
+  .rvd-post-list__description {
+    color: var(--rvd-muted);
+  }
+
+  .rvd-post-list__empty {
+    margin: 0;
+  }
+</style>

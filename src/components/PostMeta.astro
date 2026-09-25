@@ -1,0 +1,25 @@
+---
+import { formatDate, isoDate } from '../lib/format';
+
+interface Props {
+  date: Date;
+  updated?: Date;
+  minutes?: number;
+  tags?: string[];
+}
+
+const { date, updated, minutes, tags = [] } = Astro.props;
+---
+<p class="rvd-post-meta type-label">
+  <time datetime={isoDate(date)}>{formatDate(date)}</time>
+  {updated && <> · Updated <time datetime={isoDate(updated)}>{formatDate(updated)}</time></>}
+  {minutes && <> · {minutes} min read</>}
+  {tags.length > 0 && <> · {tags.join(' · ')}</>}
+</p>
+
+<style>
+  .rvd-post-meta {
+    margin: 0;
+    color: var(--rvd-muted);
+  }
+</style>

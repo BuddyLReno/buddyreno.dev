@@ -6,6 +6,8 @@
 @import './themes/violet-cobalt.css';
 @import './tones.css';
 @import './base.css';
+@import './code.css';
+@import './prose.css';
 @import './webawesome-theme.css';
 
 /* Only Rivendell colors exist as utilities. */
