@@ -2,6 +2,7 @@ import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative, resolve } from 'node:path';
 import postcss, { type Rule } from 'postcss';
 import { expect, test } from 'vitest';
+import themeInit from '../scripts/theme-init.js?raw';
 
 const SRC = resolve('src');
 const STYLES = join(SRC, 'styles');
@@ -64,4 +65,28 @@ test('global.css imports every stylesheet, tokens before themes before tones', (
   const firstTheme = imports.findIndex((path) => path.startsWith('themes/'));
   expect(imports.indexOf('tokens.css')).toBeLessThan(firstTheme);
   expect(firstTheme).toBeLessThan(imports.indexOf('tones.css'));
+});
+
+const THEME_INPUTS = new Set(['--rvd-hue-1', '--rvd-hue-2', '--rvd-accent-c']);
+const runtimeThemes = (): string[] => {
+  const match = themeInit.match(/const THEMES = (\[[^\]]*\])/);
+  if (!match) throw new Error('THEMES list not found in theme-init.js');
+  return JSON.parse(match[1].replace(/'/g, '"'));
+};
+
+test('theme files match the runtime THEMES list', () => {
+  const files = readdirSync(join(STYLES, 'themes')).map((name) => name.replace(/\.css$/, ''));
+  expect([...files].sort()).toEqual([...runtimeThemes()].sort());
+});
+
+test('themes set only color inputs, scoped to their own name', () => {
+  for (const name of runtimeThemes()) {
+    const props: string[] = [];
+    parse(join(STYLES, 'themes', `${name}.css`)).walkRules((rule) => {
+      expect(rule.selector).toBe(`:root[data-rvd-theme='${name}']`);
+      rule.walkDecls((decl) => void props.push(decl.prop));
+    });
+    expect(props.filter((prop) => !THEME_INPUTS.has(prop))).toEqual([]);
+    expect(props).toEqual(expect.arrayContaining(['--rvd-hue-1', '--rvd-hue-2']));
+  }
 });

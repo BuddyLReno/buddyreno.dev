@@ -1,0 +1,5 @@
+---
+// Blocking on purpose: sets mode/theme before first paint. Place inside <head>.
+import source from '../scripts/theme-init.js?raw';
+---
+<script is:inline set:html={source} />
