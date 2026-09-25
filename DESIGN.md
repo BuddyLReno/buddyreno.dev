@@ -1,0 +1,71 @@
+# Design system: Rivendell
+
+Rivendell is the design system for buddyreno.dev. **Read this before building any page or component.**
+The full rationale is in `docs/superpowers/specs/2026-09-24-design-system-design.md`. You can see
+every piece live at `/styleguide/` (`npm run dev`).
+
+## Foundation
+
+- Astro 7 + Tailwind CSS v4 + Web Awesome 3 (free, npm, cherry-picked in `src/scripts/webawesome.ts`).
+- **Prefix:** CSS variables `--rvd-*`, attributes `data-rvd-*`, classes `.rvd-*`, storage `rvd-*`.
+- **Themes** are named color palettes (`data-rvd-theme` on `<html>`, one file each in `src/styles/themes/`).
+  They set only `--rvd-hue-1`, `--rvd-hue-2` and `--rvd-accent-c`. Current names are working names until LOTR
+  names are picked. To add or rename a theme, change the file in `src/styles/themes/` and the `THEMES` list
+  in `src/scripts/theme-init.js`; a test fails if they disagree. The styleguide picks up theme files
+  automatically.
+- **Mode** (`data-rvd-mode="light|dark"`) is set before first paint by the inlined `theme-init.js`.
+  Use `window.rvd.setMode()` / `setTheme()` and listen for `rvd:change`.
+
+## Where things live
+
+| Decision | File |
+| --- | --- |
+| Token values (inputs + derived roles) | `src/styles/tokens.css` |
+| Section tone overrides | `src/styles/tones.css` |
+| Every `--wa-*` override | `src/styles/webawesome-theme.css` (nowhere else; component-scoped WA tweaks, e.g. `.rvd-theme-toggle`, live here too, inside `@layer wa-theme-overrides`) |
+| Tailwind colors, fonts, radii, `type-*` utilities | `src/styles/global.css` |
+| Long-form styles | `src/styles/prose.css` |
+| Code-block colors | `src/styles/code.css` (maps Shiki's `--astro-code-*` variables (Astro API names; allowed only here)) |
+
+**Re-derivation rule:** a custom property whose value uses `var(--rvd-…)` must be declared on
+`:root, [data-rvd-tone]` (or a tone-specific rule), or it won't recolor inside bands. A test enforces this.
+
+## Vocabulary. Reuse these before building anything new.
+
+| Component | Use for |
+| --- | --- |
+| `layout/Section` (`tone`, `space`, `width`) | Every full-bleed band. Tones: `base`, `tint-1`, `tint-2`, `band`, `deep`. |
+| `layout/Container`, `layout/Stack` | Measure + gutter; vertical rhythm. |
+| `Heading` (`level`, `size`, `accent`) | All headings; `accent="."` gives the colored period. |
+| `LabelList` + `LabelRow` | Mono label + content rows (Now, Experience, post index). |
+| `LinkList` + `LinkCard` | Hover-tinted link rows (projects, featured posts). |
+| `Quote` | Testimonials. |
+| `Button` (`appearance="primary\|quiet"`, `sub` slot), `CopyEmail` | Actions. |
+| `StatusDot`, `SocialLinks`, `TagList`, `Avatar`, `Wordmark`, `ThemeToggle` | As named. |
+| `Prose`, `PostMeta`, `PostList`, `ProjectHeader` | Long-form. |
+| Layouts `Base`, `Page`, `Post`, `Project` | Pages. Content lives in `src/content/{posts,projects,pages}`. |
+
+## Conventions
+
+- Style with Tailwind utilities backed by tokens (`bg-surface`, `text-muted`, `type-label`) or scoped
+  `<style>` using `var(--rvd-*)`. No hex, rgb, or raw `oklch()` outside `tokens.css`/`tones.css`.
+- Accent-colored **text** uses `--rvd-accent-text`. `--rvd-accent` is for fills, underlines, and display-size accents.
+- Content sets `draft: true` to hide from production; drafts still render in `astro dev`.
+- Dates: always `formatDate()` / `isoDate()` from `src/lib/format.ts` (UTC).
+- Tests next to pages must start with an underscore (e.g. `src/pages/_styleguide.test.ts`) — Astro treats
+  other `.ts` files in `src/pages` as endpoints.
+- Content URLs (`url`, `repo`) use `httpUrl` from `src/lib/schema.ts` (http/https only).
+
+## Don't
+
+- Don't nest a `Section` inside another `Section`. Tones reset surface tokens, not ink.
+- Don't put `LinkCard`s or code blocks on `tone="band"`. Those pairs aren't contrast-checked there.
+- Don't import `webawesome.css` or `native.css`; only the default theme CSS is loaded.
+- Don't use a `<wa-*>` component without adding its import to `src/scripts/webawesome.ts`.
+
+## Verify
+
+`npm test` · `npx astro check` · `npm run contrast` (AA across every theme × mode × tone) · `npm run screenshots`
+
+`contrast` and `screenshots` both build first, then serve `dist/` with `astro preview --ignore-lock`
+(Astro 7 otherwise auto-backgrounds `preview` when it detects an AI agent).
