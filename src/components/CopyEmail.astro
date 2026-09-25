@@ -1,0 +1,40 @@
+---
+import Button from './Button.astro';
+
+interface Props {
+  email: string;
+}
+
+const { email } = Astro.props;
+---
+<span class="rvd-copy-email" data-rvd-copy-email>
+  <wa-copy-button
+    value={email}
+    tooltip="none"
+    feedback-duration="1600"
+    success-label="Email address copied"
+    error-label="Could not copy the email address"
+  >
+    <Button>{email}<span slot="sub" data-rvd-copy-label>Copy</span></Button>
+  </wa-copy-button>
+</span>
+
+<script>
+  for (const root of document.querySelectorAll<HTMLElement>('[data-rvd-copy-email]')) {
+    const label = root.querySelector<HTMLElement>('[data-rvd-copy-label]');
+    const copyButton = root.querySelector('wa-copy-button');
+    const resetMs = Number(copyButton?.getAttribute('feedback-duration')) || 1600;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+
+    const show = (text: string) => {
+      if (label) label.textContent = text;
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        if (label) label.textContent = 'Copy';
+      }, resetMs);
+    };
+
+    root.addEventListener('wa-copy', () => show('Copied'));
+    root.addEventListener('wa-error', () => show('Select to copy'));
+  }
+</script>

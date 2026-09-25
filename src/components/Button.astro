@@ -1,0 +1,40 @@
+---
+interface Props {
+  appearance?: 'primary' | 'quiet';
+  href?: string;
+  type?: 'button' | 'submit';
+}
+
+const { appearance = 'primary', href, type = 'button' } = Astro.props;
+---
+<wa-button
+  class:list={['rvd-button', `rvd-button--${appearance}`]}
+  variant="brand"
+  appearance={appearance === 'primary' ? 'accent' : 'plain'}
+  href={href}
+  type={href ? undefined : type}
+>
+  <slot />
+  {Astro.slots.has('sub') && <span slot="end" class="rvd-button__sub type-label-sm"><slot name="sub" /></span>}
+</wa-button>
+
+<style>
+  .rvd-button::part(button) {
+    gap: 12px;
+    height: auto;
+    padding: 12px 18px;
+    border-radius: var(--rvd-radius-lg);
+    font-family: var(--rvd-font-body);
+    font-size: var(--rvd-text-body-sm);
+    font-weight: 700;
+    transition: opacity var(--rvd-dur-fast);
+  }
+
+  .rvd-button--primary:hover::part(button) {
+    opacity: 0.9;
+  }
+
+  .rvd-button__sub {
+    opacity: 0.85;
+  }
+</style>
