@@ -1,0 +1,24 @@
+---
+import type { SocialLink } from './types';
+
+interface Props {
+  links: SocialLink[];
+  label?: string;
+}
+
+const { links, label = 'Elsewhere' } = Astro.props;
+---
+<ul class="rvd-social type-ui" aria-label={label}>
+  {links.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+</ul>
+
+<style>
+  .rvd-social {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 20px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+</style>

@@ -1,0 +1,33 @@
+---
+interface Props {
+  label: string;
+}
+
+const { label } = Astro.props;
+---
+<div class="rvd-label-row">
+  <dt class="rvd-label-row__label type-label">{label}</dt>
+  <dd class="rvd-label-row__content type-body-md"><slot /></dd>
+</div>
+
+<style>
+  .rvd-label-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 20px;
+    padding-block: 12px;
+    border-top: 1px solid var(--rvd-line);
+  }
+
+  .rvd-label-row__label {
+    flex: 0 0 100px;
+    color: var(--rvd-muted);
+  }
+
+  .rvd-label-row__content {
+    flex: 1 1 300px;
+    min-width: 0;
+    margin: 0;
+  }
+</style>

@@ -1,0 +1,35 @@
+---
+import Tag from './Tag.astro';
+
+interface Props {
+  tags: string[];
+}
+
+const { tags } = Astro.props;
+---
+{
+  tags.length > 0 && (
+    <span class="rvd-tag-list">
+      {tags.map((tag, index) => (
+        <>
+          {index > 0 && (
+            <>
+              {' '}
+              <span class="rvd-tag-list__sep type-label-sm" aria-hidden="true">
+                ·
+              </span>
+              {' '}
+            </>
+          )}
+          <Tag>{tag}</Tag>
+        </>
+      ))}
+    </span>
+  )
+}
+
+<style>
+  .rvd-tag-list__sep {
+    color: var(--rvd-muted);
+  }
+</style>

@@ -1,0 +1,20 @@
+---
+interface Props {
+  closed?: boolean;
+}
+
+const { closed = true } = Astro.props;
+---
+<dl class="rvd-label-list" data-rvd-closed={String(closed)}><slot /></dl>
+
+<style>
+  .rvd-label-list {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+  }
+
+  .rvd-label-list[data-rvd-closed='true'] {
+    border-bottom: 1px solid var(--rvd-line);
+  }
+</style>

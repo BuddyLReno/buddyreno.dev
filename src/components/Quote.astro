@@ -1,0 +1,40 @@
+---
+interface Props {
+  name: string;
+  role?: string;
+}
+
+const { name, role } = Astro.props;
+---
+<figure class="rvd-quote">
+  <blockquote class="rvd-quote__text">“<slot />”</blockquote>
+  <figcaption class="rvd-quote__caption">
+    <span class="rvd-quote__name">{name}</span>{role && <> · {role}</>}
+  </figcaption>
+</figure>
+
+<style>
+  .rvd-quote {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+  }
+
+  .rvd-quote__text {
+    margin: 0;
+    font-size: var(--rvd-text-body);
+    line-height: 1.6;
+    text-wrap: pretty;
+  }
+
+  .rvd-quote__caption {
+    color: var(--rvd-muted);
+    font-size: var(--rvd-text-ui);
+  }
+
+  .rvd-quote__name {
+    color: var(--rvd-ink);
+    font-weight: 600;
+  }
+</style>

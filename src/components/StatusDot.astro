@@ -1,0 +1,43 @@
+---
+interface Props {
+  pulse?: boolean;
+}
+
+const { pulse = false } = Astro.props;
+---
+<p class="rvd-status" data-rvd-pulse={pulse ? '' : undefined}>
+  <span class="rvd-status__dot" aria-hidden="true"></span>
+  <span><slot /></span>
+</p>
+
+<style>
+  .rvd-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    color: var(--rvd-muted);
+    font-size: var(--rvd-text-ui);
+  }
+
+  .rvd-status__dot {
+    flex: none;
+    width: 7px;
+    height: 7px;
+    border-radius: var(--rvd-radius-full);
+    background: var(--rvd-accent);
+  }
+
+  .rvd-status[data-rvd-pulse] .rvd-status__dot {
+    animation: rvd-pulse 2s ease-out infinite;
+  }
+
+  @keyframes rvd-pulse {
+    from {
+      box-shadow: 0 0 0 0 color-mix(in oklab, var(--rvd-accent) 80%, transparent);
+    }
+    to {
+      box-shadow: 0 0 0 10px transparent;
+    }
+  }
+</style>
