@@ -55,4 +55,13 @@
     --wa-tooltip-background-color: var(--rvd-ink);
     --wa-tooltip-content-color: var(--rvd-bg);
   }
+
+  /* ThemeToggle: borderless segmented control (see ThemeToggle.astro). */
+  .rvd-theme-toggle {
+    --wa-form-control-height: 24px;
+    --wa-form-control-padding-inline: 9px;
+    --wa-form-control-border-color: transparent;
+    --wa-form-control-activated-color: transparent;
+    --wa-color-surface-default: transparent;
+  }
 }

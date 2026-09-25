@@ -20,3 +20,9 @@ test('Base can mark a page noindex', async () => {
   const html = await render(Base, { props: { title: 'Hidden', noindex: true } });
   expect(html).toContain('<meta name="robots" content="noindex">');
 });
+
+test('Base renders the site header and footer by default', async () => {
+  const html = await render(Base, { props: { title: 'Chrome' } });
+  expect(html).toContain('rvd-site-header');
+  expect(html).toContain('rvd-site-footer');
+});

@@ -1,0 +1,28 @@
+---
+import Container from './Container.astro';
+
+const year = new Date().getFullYear();
+---
+<footer class="rvd-site-footer type-caption" data-rvd-tone="deep">
+  <Container>
+    <div class="rvd-site-footer__row">
+      <span><slot name="start">© {year} Buddy Reno</slot></span>
+      <span><slot name="end">Nashville, TN</slot></span>
+    </div>
+  </Container>
+</footer>
+
+<style>
+  .rvd-site-footer {
+    border-top: 1px solid var(--rvd-line);
+    color: var(--rvd-muted);
+  }
+
+  .rvd-site-footer__row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+    padding-block: 22px 36px;
+  }
+</style>

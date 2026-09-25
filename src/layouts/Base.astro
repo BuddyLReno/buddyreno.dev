@@ -5,6 +5,8 @@ import '@fontsource-variable/manrope/index.css';
 import '@fontsource/space-mono/400.css';
 import '../styles/global.css';
 import ThemeScript from '../components/ThemeScript.astro';
+import SiteFooter from '../components/layout/SiteFooter.astro';
+import SiteHeader from '../components/layout/SiteHeader.astro';
 
 interface Props {
   title: string;
@@ -28,11 +30,11 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : un
   </head>
   <body>
     <a class="sr-only focus:not-sr-only" href="#main">Skip to content</a>
-    <slot name="header" />
+    <slot name="header"><SiteHeader /></slot>
     <main id="main">
       <slot />
     </main>
-    <slot name="footer" />
+    <slot name="footer"><SiteFooter /></slot>
     <script>
       import '../scripts/webawesome.ts';
     </script>
