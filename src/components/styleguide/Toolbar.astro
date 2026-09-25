@@ -25,42 +25,44 @@ const themes = Object.keys(import.meta.glob('../../styles/themes/*.css'))
 </nav>
 
 <style>
-  .rvd-sg-toolbar {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px 20px;
-    padding: 10px var(--rvd-gutter);
-    border-block: 1px solid var(--rvd-line);
-    background: var(--rvd-bg);
-  }
+  @layer components {
+    .rvd-sg-toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px 20px;
+      padding: 10px var(--rvd-gutter);
+      border-block: 1px solid var(--rvd-line);
+      background: var(--rvd-bg);
+    }
 
-  .rvd-sg-toolbar__links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px 16px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
+    .rvd-sg-toolbar__links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 16px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
 
-  .rvd-sg-toolbar__theme {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--rvd-muted);
-  }
+    .rvd-sg-toolbar__theme {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--rvd-muted);
+    }
 
-  .rvd-sg-toolbar__theme select {
-    padding: 4px 8px;
-    border: 1px solid var(--rvd-line);
-    border-radius: var(--rvd-radius-sm);
-    background: var(--rvd-surface);
-    color: var(--rvd-ink);
-    font: inherit;
+    .rvd-sg-toolbar__theme select {
+      padding: 4px 8px;
+      border: 1px solid var(--rvd-line);
+      border-radius: var(--rvd-radius-sm);
+      background: var(--rvd-surface);
+      color: var(--rvd-ink);
+      font: inherit;
+    }
   }
 </style>

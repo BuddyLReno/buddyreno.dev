@@ -11,8 +11,8 @@ every piece live at `/styleguide/` (`npm run dev`).
 - **Themes** are named color palettes (`data-rvd-theme` on `<html>`, one file each in `src/styles/themes/`).
   They set only `--rvd-hue-1`, `--rvd-hue-2` and `--rvd-accent-c`. Current names are working names until LOTR
   names are picked. To add or rename a theme, change the file in `src/styles/themes/` and the `THEMES` list
-  in `src/scripts/theme-init.js`; a test fails if they disagree. The styleguide picks up theme files
-  automatically.
+  in `src/scripts/theme-init.js`. Adding one takes three edits: the file, an `@import` in `global.css`, and
+  the `THEMES` entry; a test catches each omission. The styleguide picks up theme files automatically.
 - **Mode** (`data-rvd-mode="light|dark"`) is set before first paint by the inlined `theme-init.js`.
   Use `window.rvd.setMode()` / `setTheme()` and listen for `rvd:change`.
 
@@ -38,17 +38,21 @@ every piece live at `/styleguide/` (`npm run dev`).
 | `layout/Container`, `layout/Stack` | Measure + gutter; vertical rhythm. |
 | `Heading` (`level`, `size`, `accent`) | All headings; `accent="."` gives the colored period. |
 | `LabelList` + `LabelRow` | Mono label + content rows (Now, Experience, post index). |
-| `LinkList` + `LinkCard` | Hover-tinted link rows (projects, featured posts). |
+| `LinkList` + `LinkCard` | Hover-tinted link rows (projects, featured posts). `LinkCard` renders an `<li>`: always inside `LinkList`. |
 | `Quote` | Testimonials. |
 | `Button` (`appearance="primary\|quiet"`, `sub` slot), `CopyEmail` | Actions. |
-| `StatusDot`, `SocialLinks`, `TagList`, `Avatar`, `Wordmark`, `ThemeToggle` | As named. |
+| `StatusDot`, `SocialLinks`, `TagList`, `Wordmark`, `ThemeToggle` | As named. |
+| `Avatar` (`src`, `label`) | Takes a string: `import me from '../assets/images/me_bw.jpg'`, then `src={me.src}`. Not optimized (`wa-avatar` bypasses `astro:assets`). |
 | `Prose`, `PostMeta`, `PostList`, `ProjectHeader` | Long-form. |
-| Layouts `Base`, `Page`, `Post`, `Project` | Pages. Content lives in `src/content/{posts,projects,pages}`. |
+| Layouts `Base`, `Page`, `Post`, `Project` | Pages. Content lives in `src/content/{posts,projects,pages}`. `Base` has `header` and `footer` named slots (defaults `SiteHeader`/`SiteFooter`). |
 
 ## Conventions
 
 - Style with Tailwind utilities backed by tokens (`bg-surface`, `text-muted`, `type-label`) or scoped
   `<style>` using `var(--rvd-*)`. No hex, rgb, or raw `oklch()` outside `tokens.css`/`tones.css`.
+- Component and system styles live in `@layer components`, so Tailwind utilities passed via `class` override
+  them (e.g. `<Heading class="mb-6">`). Custom-property declarations stay unlayered. `Base.astro` fixes the
+  layer order up front; tests enforce all three.
 - Accent-colored **text** uses `--rvd-accent-text`. `--rvd-accent` is for fills, underlines, and display-size accents.
 - Content sets `draft: true` to hide from production; drafts still render in `astro dev`.
 - Dates: always `formatDate()` / `isoDate()` from `src/lib/format.ts` (UTC).
@@ -59,7 +63,9 @@ every piece live at `/styleguide/` (`npm run dev`).
 ## Don't
 
 - Don't nest a `Section` inside another `Section`. Tones reset surface tokens, not ink.
-- Don't put `LinkCard`s or code blocks on `tone="band"`. Those pairs aren't contrast-checked there.
+- Don't put `LinkCard`s or code blocks on `tone="band"`. Those pairs aren't contrast-checked there. Put `LinkCard`s
+  on `base` or `deep` only (their hover tint isn't checked on `tint-*` either).
+- Don't name a `pages` entry `blog`, `projects`, or `styleguide`; those routes shadow it.
 - Don't import `webawesome.css` or `native.css`; only the default theme CSS is loaded.
 - Don't use a `<wa-*>` component without adding its import to `src/scripts/webawesome.ts`.
 

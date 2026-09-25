@@ -25,6 +25,8 @@
     --wa-color-text-quiet: var(--rvd-muted);
     --wa-color-text-link: var(--rvd-accent-text);
     --wa-color-focus: var(--rvd-accent);
+    /* Composites resolve where declared; redeclare so they pick up the tone's values. */
+    --wa-focus-ring: var(--wa-focus-ring-style) var(--wa-focus-ring-width) var(--wa-color-focus);
 
     --wa-color-brand-fill-loud: var(--rvd-accent);
     --wa-color-brand-on-loud: var(--rvd-on-accent);
@@ -54,6 +56,7 @@
     --wa-form-control-hint-color: var(--rvd-muted);
     --wa-tooltip-background-color: var(--rvd-ink);
     --wa-tooltip-content-color: var(--rvd-bg);
+    --wa-tooltip-border-color: var(--wa-tooltip-background-color);
   }
 
   /* ThemeToggle: borderless segmented control (see ThemeToggle.astro). */

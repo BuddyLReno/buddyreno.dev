@@ -1,116 +1,118 @@
 /* Long-form content (blog posts, project write-ups, simple pages). */
-.rvd-prose {
-  font-size: var(--rvd-text-body);
-  line-height: 1.65;
-}
+@layer components {
+  .rvd-prose {
+    font-size: var(--rvd-text-body);
+    line-height: 1.65;
+  }
 
-.rvd-prose > * {
-  margin-block: 0;
-}
+  .rvd-prose > * {
+    margin-block: 0;
+  }
 
-.rvd-prose > * + * {
-  margin-block-start: 1em;
-}
+  .rvd-prose > * + * {
+    margin-block-start: 1em;
+  }
 
-.rvd-prose h2 {
-  margin-block-start: 2em;
-  font-family: var(--rvd-font-display);
-  font-weight: 800;
-  font-size: var(--rvd-text-section);
-  line-height: 1;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-}
+  .rvd-prose h2 {
+    margin-block-start: 2em;
+    font-family: var(--rvd-font-display);
+    font-weight: 800;
+    font-size: var(--rvd-text-section);
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
 
-.rvd-prose h3 {
-  margin-block-start: 1.6em;
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 1.3;
-}
+  .rvd-prose h3 {
+    margin-block-start: 1.6em;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
 
-.rvd-prose h4 {
-  margin-block-start: 1.4em;
-  font-size: var(--rvd-text-body);
-  font-weight: 700;
-  line-height: 1.4;
-}
+  .rvd-prose h4 {
+    margin-block-start: 1.4em;
+    font-size: var(--rvd-text-body);
+    font-weight: 700;
+    line-height: 1.4;
+  }
 
-.rvd-prose :is(h2, h3, h4) + * {
-  margin-block-start: 0.6em;
-}
+  .rvd-prose :is(h2, h3, h4) + * {
+    margin-block-start: 0.6em;
+  }
 
-.rvd-prose ul {
-  padding-inline-start: 1.25em;
-  list-style: disc;
-}
+  .rvd-prose ul {
+    padding-inline-start: 1.25em;
+    list-style: disc;
+  }
 
-.rvd-prose ol {
-  padding-inline-start: 1.25em;
-  list-style: decimal;
-}
+  .rvd-prose ol {
+    padding-inline-start: 1.25em;
+    list-style: decimal;
+  }
 
-.rvd-prose li + li {
-  margin-block-start: 0.35em;
-}
+  .rvd-prose li + li {
+    margin-block-start: 0.35em;
+  }
 
-.rvd-prose li::marker {
-  color: var(--rvd-accent-text);
-}
+  .rvd-prose li::marker {
+    color: var(--rvd-accent-text);
+  }
 
-.rvd-prose :not(pre) > code {
-  padding: 0.15em 0.35em;
-  border-radius: var(--rvd-radius-sm);
-  background: var(--rvd-surface);
-  font-family: var(--rvd-font-mono);
-  font-size: 0.85em;
-}
+  .rvd-prose :not(pre) > code {
+    padding: 0.15em 0.35em;
+    border-radius: var(--rvd-radius-sm);
+    background: var(--rvd-surface);
+    font-family: var(--rvd-font-mono);
+    font-size: 0.85em;
+  }
 
-.rvd-prose pre {
-  overflow-x: auto;
-}
+  .rvd-prose pre {
+    overflow-x: auto;
+  }
 
-.rvd-prose blockquote {
-  padding-inline-start: 18px;
-  border-inline-start: 3px solid var(--rvd-accent);
-  font-size: var(--rvd-text-body);
-  line-height: 1.6;
-}
+  .rvd-prose blockquote {
+    padding-inline-start: 18px;
+    border-inline-start: 3px solid var(--rvd-accent);
+    font-size: var(--rvd-text-body);
+    line-height: 1.6;
+  }
 
-.rvd-prose img {
-  max-width: 100%;
-  height: auto;
-  border-radius: var(--rvd-radius-lg);
-}
+  .rvd-prose img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--rvd-radius-lg);
+  }
 
-.rvd-prose figcaption {
-  margin-block-start: 8px;
-  color: var(--rvd-muted);
-  font-size: var(--rvd-text-caption);
-}
+  .rvd-prose figcaption {
+    margin-block-start: 8px;
+    color: var(--rvd-muted);
+    font-size: var(--rvd-text-caption);
+  }
 
-.rvd-prose hr {
-  margin-block: 2.5em;
-  border: 0;
-  border-top: 1px solid var(--rvd-line);
-}
+  .rvd-prose hr {
+    margin-block: 2.5em;
+    border: 0;
+    border-top: 1px solid var(--rvd-line);
+  }
 
-.rvd-prose table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: var(--rvd-text-body-md);
-}
+  .rvd-prose table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--rvd-text-body-md);
+  }
 
-.rvd-prose th {
-  color: var(--rvd-muted);
-  font-family: var(--rvd-font-mono);
-  font-size: var(--rvd-text-label);
-  font-weight: 400;
-  text-align: start;
-  text-transform: uppercase;
-}
+  .rvd-prose th {
+    color: var(--rvd-muted);
+    font-family: var(--rvd-font-mono);
+    font-size: var(--rvd-text-label);
+    font-weight: 400;
+    text-align: start;
+    text-transform: uppercase;
+  }
 
-.rvd-prose :is(th, td) {
-  padding: 10px 12px 10px 0;
-  border-bottom: 1px solid var(--rvd-line);
+  .rvd-prose :is(th, td) {
+    padding: 10px 12px 10px 0;
+    border-bottom: 1px solid var(--rvd-line);
+  }
 }

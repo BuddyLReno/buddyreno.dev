@@ -13,12 +13,14 @@ const Tag = `h${level}` as 'h1' | 'h2' | 'h3' | 'h4';
 <Tag id={id} class:list={['rvd-heading', `type-display-${size}`, className]}><slot />{accent && <span class="rvd-heading__accent">{accent}</span>}</Tag>
 
 <style>
-  .rvd-heading {
-    margin: 0;
-    min-width: 0;
-  }
+  @layer components {
+    .rvd-heading {
+      margin: 0;
+      min-width: 0;
+    }
 
-  .rvd-heading__accent {
-    color: var(--rvd-accent);
+    .rvd-heading__accent {
+      color: var(--rvd-accent);
+    }
   }
 </style>

@@ -21,6 +21,12 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : un
 <html lang="en" class="wa-theme-default wa-palette-default">
   <head>
     <meta charset="utf-8" />
+    {/*
+      Cascade layer order, fixed before any stylesheet: Astro bundles component CSS ahead of
+      global.css, so first-appearance order would rank `components` below Tailwind's `base`.
+      Web Awesome's layers first (their layers.css order), then Tailwind's.
+    */}
+    <style is:inline>@layer wa-native, wa-base, wa-utilities, wa-color-palette, wa-color-variant, wa-theme, wa-theme-dimension, wa-theme-overrides, properties, theme, base, components, utilities;</style>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     {description && <meta name="description" content={description} />}

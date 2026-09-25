@@ -103,3 +103,74 @@ test('webawesome-theme.css only overrides tokens Web Awesome defines', () => {
   });
   expect(unknown).toEqual([]);
 });
+
+/*
+ * WA composites (e.g. --wa-focus-ring) resolve where they're declared. If one references a --wa-*
+ * token we re-point on [data-rvd-tone], it must be redeclared there too, or it keeps the root value
+ * inside bands. Entries here are deliberately left at root.
+ */
+const WA_ROOT_ONLY: Record<string, string> = {
+  '--wa-color-mix-active': 'mode-dependent mix amount (10%/20%) for active tints; cosmetic',
+  '--wa-color-shadow': 'dark-mode shadow color; cosmetic',
+  '--wa-form-control-border-radius': 'radius tokens are tone-invariant',
+  '--wa-panel-border-radius': 'radius tokens are tone-invariant',
+  '--wa-tooltip-border-radius': 'radius tokens are tone-invariant',
+};
+
+test('Web Awesome composites that use our tone overrides are redeclared on [data-rvd-tone]', () => {
+  const waDefault = postcss.parse(
+    readFileSync(resolve('node_modules/@awesome.me/webawesome/dist/styles/themes/default.css'), 'utf8'),
+  );
+  const toneProps = new Set<string>();
+  parse(join(STYLES, 'webawesome-theme.css')).walkRules((rule) => {
+    if (rule.selector.includes('[data-rvd-tone')) rule.walkDecls(/^--wa-/, (decl) => void toneProps.add(decl.prop));
+  });
+  const missing = new Set<string>();
+  waDefault.walkDecls(/^--wa-/, (decl) => {
+    if (toneProps.has(decl.prop) || decl.prop in WA_ROOT_ONLY) return;
+    const refs = [...decl.value.matchAll(/var\(\s*(--wa-[a-z0-9-]+)/g)].map(([, name]) => name);
+    if (refs.some((name) => toneProps.has(name))) missing.add(decl.prop);
+  });
+  expect([...missing]).toEqual([]);
+});
+
+const insideComponentsLayer = (node: postcss.Node): boolean => {
+  for (let parent = node.parent; parent; parent = parent.parent) {
+    if (parent.type === 'atrule' && (parent as postcss.AtRule).name === 'layer') {
+      return (parent as postcss.AtRule).params.trim() === 'components';
+    }
+  }
+  return false;
+};
+
+test('component <style> blocks live in @layer components, so utilities override them', () => {
+  const offenders: string[] = [];
+  for (const file of walk(SRC).filter((path) => path.endsWith('.astro'))) {
+    const text = readFileSync(file, 'utf8');
+    for (const [, attrs, css] of text.matchAll(/<style([^>]*)>([\s\S]*?)<\/style>/g)) {
+      const trimmed = css.trim();
+      if (!trimmed) continue;
+      const root = postcss.parse(trimmed);
+      // Base.astro's inline layer-order statement is the one allowed non-component block.
+      const orderOnly = root.nodes.every((node) => node.type === 'atrule' && node.name === 'layer' && !node.nodes);
+      if (attrs.includes('is:inline') && orderOnly) continue;
+      const layered = root.nodes.every(
+        (node) =>
+          node.type === 'comment' ||
+          (node.type === 'atrule' && node.name === 'layer' && node.params.trim() === 'components'),
+      );
+      if (!trimmed.startsWith('@layer components') || !layered) offenders.push(relative(SRC, file));
+    }
+  }
+  expect(offenders).toEqual([]);
+});
+
+test('custom properties in src/styles stay unlayered by @layer components (tones must beat tokens)', () => {
+  const offenders: string[] = [];
+  for (const file of cssFiles()) {
+    parse(file).walkDecls(/^--/, (decl) => {
+      if (insideComponentsLayer(decl)) offenders.push(`${relative(SRC, file)}: ${decl.prop}`);
+    });
+  }
+  expect(offenders).toEqual([]);
+});

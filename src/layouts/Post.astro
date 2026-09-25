@@ -29,17 +29,19 @@ const { title, description, date, updated, tags, minutes } = Astro.props;
 </Base>
 
 <style>
-  .rvd-post,
-  .rvd-post__header {
-    display: flex;
-    flex-direction: column;
-  }
+  @layer components {
+    .rvd-post,
+    .rvd-post__header {
+      display: flex;
+      flex-direction: column;
+    }
 
-  .rvd-post {
-    gap: 32px;
-  }
+    .rvd-post {
+      gap: 32px;
+    }
 
-  .rvd-post__header {
-    gap: 14px;
+    .rvd-post__header {
+      gap: 14px;
+    }
   }
 </style>

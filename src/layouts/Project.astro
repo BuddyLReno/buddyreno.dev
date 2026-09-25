@@ -26,9 +26,11 @@ const { name, blurb, tags, url, repo, cover } = Astro.props;
 </Base>
 
 <style>
-  .rvd-project {
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
+  @layer components {
+    .rvd-project {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
   }
 </style>

@@ -29,7 +29,9 @@ const { tags } = Astro.props;
 }
 
 <style>
-  .rvd-tag-list__sep {
-    color: var(--rvd-muted);
+  @layer components {
+    .rvd-tag-list__sep {
+      color: var(--rvd-muted);
+    }
   }
 </style>

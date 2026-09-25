@@ -21,42 +21,44 @@ const { href, title, tags = [], external = false } = Astro.props;
 </li>
 
 <style>
-  .rvd-link-card {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 4px 16px;
-    padding: 14px;
-    border-radius: var(--rvd-radius-lg);
-    text-decoration: none;
-    transition: background-color var(--rvd-dur-fast);
-  }
+  @layer components {
+    .rvd-link-card {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 4px 16px;
+      padding: 14px;
+      border-radius: var(--rvd-radius-lg);
+      text-decoration: none;
+      transition: background-color var(--rvd-dur-fast);
+    }
 
-  .rvd-link-card:hover {
-    background-color: var(--rvd-hover);
-    color: var(--rvd-ink);
-  }
+    .rvd-link-card:hover {
+      background-color: var(--rvd-hover);
+      color: var(--rvd-ink);
+    }
 
-  .rvd-link-card__body {
-    display: flex;
-    flex: 1 1 320px;
-    flex-direction: column;
-    gap: 4px;
-    min-width: 0;
-  }
+    .rvd-link-card__body {
+      display: flex;
+      flex: 1 1 320px;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+    }
 
-  .rvd-link-card__title {
-    font-size: var(--rvd-text-body);
-    font-weight: 700;
-  }
+    .rvd-link-card__title {
+      font-size: var(--rvd-text-body);
+      font-weight: 700;
+    }
 
-  .rvd-link-card__arrow {
-    color: var(--rvd-accent-text);
-    font-weight: 600;
-  }
+    .rvd-link-card__arrow {
+      color: var(--rvd-accent-text);
+      font-weight: 600;
+    }
 
-  .rvd-link-card__blurb {
-    color: var(--rvd-muted);
-    text-wrap: pretty;
+    .rvd-link-card__blurb {
+      color: var(--rvd-muted);
+      text-wrap: pretty;
+    }
   }
 </style>

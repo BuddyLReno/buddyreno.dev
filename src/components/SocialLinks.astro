@@ -13,12 +13,14 @@ const { links, label = 'Elsewhere' } = Astro.props;
 </ul>
 
 <style>
-  .rvd-social {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px 20px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
+  @layer components {
+    .rvd-social {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 20px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
   }
 </style>

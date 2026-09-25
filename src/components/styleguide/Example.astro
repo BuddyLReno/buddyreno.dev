@@ -21,20 +21,22 @@ const { title, props, code } = Astro.props;
 </article>
 
 <style>
-  .rvd-example {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    padding-block: 28px;
-    border-top: 1px solid var(--rvd-line);
-  }
+  @layer components {
+    .rvd-example {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding-block: 28px;
+      border-top: 1px solid var(--rvd-line);
+    }
 
-  .rvd-example__header h3,
-  .rvd-example__props {
-    margin: 0;
-  }
+    .rvd-example__header h3,
+    .rvd-example__props {
+      margin: 0;
+    }
 
-  .rvd-example__props {
-    color: var(--rvd-muted);
+    .rvd-example__props {
+      color: var(--rvd-muted);
+    }
   }
 </style>

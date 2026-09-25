@@ -271,70 +271,72 @@ const radii = ['--rvd-radius-sm', '--rvd-radius-md', '--rvd-radius-lg', '--rvd-r
 </script>
 
 <style>
-  .rvd-sg-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 18px;
-  }
+  @layer components {
+    .rvd-sg-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 18px;
+    }
 
-  .rvd-sg-type p {
-    margin: 0;
-  }
+    .rvd-sg-type p {
+      margin: 0;
+    }
 
-  .rvd-sg-muted,
-  .rvd-sg-muted-text {
-    color: var(--rvd-muted);
-  }
+    .rvd-sg-muted,
+    .rvd-sg-muted-text {
+      color: var(--rvd-muted);
+    }
 
-  .rvd-sg-muted-text {
-    margin: 0;
-  }
+    .rvd-sg-muted-text {
+      margin: 0;
+    }
 
-  .rvd-sg-space {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
+    .rvd-sg-space {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
 
-  .rvd-sg-space__bar {
-    height: 14px;
-    border-radius: var(--rvd-radius-sm);
-    background: var(--rvd-accent);
-  }
+    .rvd-sg-space__bar {
+      height: 14px;
+      border-radius: var(--rvd-radius-sm);
+      background: var(--rvd-accent);
+    }
 
-  .rvd-sg-radii {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 14px;
-  }
+    .rvd-sg-radii {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
 
-  .rvd-sg-radius {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 120px;
-    height: 72px;
-    border: 1px solid var(--rvd-line);
-    background: var(--rvd-surface);
-  }
+    .rvd-sg-radius {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 120px;
+      height: 72px;
+      border: 1px solid var(--rvd-line);
+      background: var(--rvd-surface);
+    }
 
-  .rvd-sg-row {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 12px 20px;
-  }
+    .rvd-sg-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px 20px;
+    }
 
-  .rvd-sg-readout {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
+    .rvd-sg-readout {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
 
-  .rvd-sg-readout :global(li[data-pass='false']) {
-    font-weight: 700;
+    .rvd-sg-readout :global(li[data-pass='false']) {
+      font-weight: 700;
+    }
   }
 </style>

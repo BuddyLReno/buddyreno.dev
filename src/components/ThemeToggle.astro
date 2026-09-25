@@ -33,34 +33,36 @@ const { label = 'Color mode' } = Astro.props;
 </script>
 
 <style>
-  .rvd-theme-toggle::part(form-control-label) {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
-  }
+  @layer components {
+    .rvd-theme-toggle::part(form-control-label) {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
 
-  .rvd-theme-toggle::part(form-control-input) {
-    flex-wrap: nowrap;
-    gap: 2px;
-    padding: 3px;
-    border: 1px solid var(--rvd-line);
-    border-radius: var(--rvd-radius-md);
-  }
+    .rvd-theme-toggle::part(form-control-input) {
+      flex-wrap: nowrap;
+      gap: 2px;
+      padding: 3px;
+      border: 1px solid var(--rvd-line);
+      border-radius: var(--rvd-radius-md);
+    }
 
-  .rvd-theme-toggle wa-radio {
-    margin: 0;
-    border-radius: var(--rvd-radius-sm);
-    color: var(--rvd-muted);
-    font-family: var(--rvd-font-mono);
-    font-size: var(--rvd-text-label-sm);
-    text-transform: uppercase;
-  }
+    .rvd-theme-toggle wa-radio {
+      margin: 0;
+      border-radius: var(--rvd-radius-sm);
+      color: var(--rvd-muted);
+      font-family: var(--rvd-font-mono);
+      font-size: var(--rvd-text-label-sm);
+      text-transform: uppercase;
+    }
 
-  .rvd-theme-toggle wa-radio:state(checked) {
-    background-color: var(--rvd-surface);
-    color: var(--rvd-ink);
+    .rvd-theme-toggle wa-radio:state(checked) {
+      background-color: var(--rvd-surface);
+      color: var(--rvd-ink);
+    }
   }
 </style>

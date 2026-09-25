@@ -14,27 +14,29 @@ const { name, role } = Astro.props;
 </figure>
 
 <style>
-  .rvd-quote {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin: 0;
-  }
+  @layer components {
+    .rvd-quote {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 0;
+    }
 
-  .rvd-quote__text {
-    margin: 0;
-    font-size: var(--rvd-text-body);
-    line-height: 1.6;
-    text-wrap: pretty;
-  }
+    .rvd-quote__text {
+      margin: 0;
+      font-size: var(--rvd-text-body);
+      line-height: 1.6;
+      text-wrap: pretty;
+    }
 
-  .rvd-quote__caption {
-    color: var(--rvd-muted);
-    font-size: var(--rvd-text-ui);
-  }
+    .rvd-quote__caption {
+      color: var(--rvd-muted);
+      font-size: var(--rvd-text-ui);
+    }
 
-  .rvd-quote__name {
-    color: var(--rvd-ink);
-    font-weight: 600;
+    .rvd-quote__name {
+      color: var(--rvd-ink);
+      font-weight: 600;
+    }
   }
 </style>

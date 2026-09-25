@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { expect, test } from 'vitest';
 import { render } from '../test/render';
 import Base from './Base.astro';
@@ -25,4 +27,18 @@ test('Base renders the site header and footer by default', async () => {
   const html = await render(Base, { props: { title: 'Chrome' } });
   expect(html).toContain('rvd-site-header');
   expect(html).toContain('rvd-site-footer');
+});
+
+test('Base fixes the cascade layer order before any stylesheet', async () => {
+  // Astro bundles component CSS ahead of global.css, so first-appearance order would rank
+  // `@layer components` below Tailwind's `base` (preflight would then reset component spacing).
+  const html = await render(Base, { props: { title: 'Layers' } });
+  const head = html.slice(0, html.indexOf('</head>'));
+  const first = head.match(/<(style|link rel="stylesheet")[^>]*>([^<]*)/);
+  const order = first?.[2].match(/^@layer ([^;]+);$/)?.[1].split(',').map((name) => name.trim());
+  const waLayers = readFileSync(resolve('node_modules/@awesome.me/webawesome/dist/styles/layers.css'), 'utf8')
+    .match(/@layer ([^;{]+);/)![1]
+    .split(',')
+    .map((name) => name.trim());
+  expect(order).toEqual([...waLayers, 'properties', 'theme', 'base', 'components', 'utilities']);
 });

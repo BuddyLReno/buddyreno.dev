@@ -1,4 +1,13 @@
 @layer base {
+  /* Bare `border` utilities draw hairlines, not ink (Tailwind 4 defaults to currentColor). */
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--rvd-line);
+  }
+
   body {
     margin: 0;
     background-color: var(--rvd-bg);

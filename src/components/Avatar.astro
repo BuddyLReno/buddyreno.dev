@@ -15,23 +15,25 @@ const { src, label } = Astro.props;
 }
 
 <style>
-  .rvd-avatar {
-    flex: 0 0 auto;
-    aspect-ratio: 1;
-    border: 1px solid var(--rvd-line);
-    border-radius: var(--rvd-radius-full);
-  }
+  @layer components {
+    .rvd-avatar {
+      flex: 0 0 auto;
+      aspect-ratio: 1;
+      border: 1px solid var(--rvd-line);
+      border-radius: var(--rvd-radius-full);
+    }
 
-  wa-avatar.rvd-avatar {
-    --size: clamp(64px, 11vw, 84px);
-  }
+    wa-avatar.rvd-avatar {
+      --size: clamp(64px, 11vw, 84px);
+    }
 
-  .rvd-avatar--placeholder {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: clamp(64px, 11vw, 84px);
-    background: repeating-linear-gradient(135deg, var(--rvd-surface) 0 6px, var(--rvd-bg) 6px 12px);
-    color: var(--rvd-muted);
+    .rvd-avatar--placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: clamp(64px, 11vw, 84px);
+      background: repeating-linear-gradient(135deg, var(--rvd-surface) 0 6px, var(--rvd-bg) 6px 12px);
+      color: var(--rvd-muted);
+    }
   }
 </style>

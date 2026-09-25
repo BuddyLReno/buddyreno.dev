@@ -32,26 +32,28 @@ const { name, blurb, tags = [], url, repo, cover, coverAlt = '' } = Astro.props;
 </header>
 
 <style>
-  .rvd-project-header {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-  }
+  @layer components {
+    .rvd-project-header {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
 
-  .rvd-project-header__blurb {
-    margin: 0;
-    color: var(--rvd-muted);
-  }
+    .rvd-project-header__blurb {
+      margin: 0;
+      color: var(--rvd-muted);
+    }
 
-  .rvd-project-header__links {
-    display: flex;
-    gap: 20px;
-    margin: 0;
-  }
+    .rvd-project-header__links {
+      display: flex;
+      gap: 20px;
+      margin: 0;
+    }
 
-  .rvd-project-header__cover {
-    width: 100%;
-    height: auto;
-    border-radius: var(--rvd-radius-lg);
+    .rvd-project-header__cover {
+      width: 100%;
+      height: auto;
+      border-radius: var(--rvd-radius-lg);
+    }
   }
 </style>

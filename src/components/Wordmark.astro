@@ -10,11 +10,13 @@ const { first, last, href = '/' } = Astro.props;
 <a class="rvd-wordmark type-wordmark" href={href}>{first}<span class="rvd-wordmark__slash">/</span>{last}</a>
 
 <style>
-  .rvd-wordmark {
-    text-decoration: none;
-  }
+  @layer components {
+    .rvd-wordmark {
+      text-decoration: none;
+    }
 
-  .rvd-wordmark__slash {
-    color: var(--rvd-accent);
+    .rvd-wordmark__slash {
+      color: var(--rvd-accent);
+    }
   }
 </style>

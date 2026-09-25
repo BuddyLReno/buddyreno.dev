@@ -18,8 +18,10 @@ const { date, updated, minutes, tags = [] } = Astro.props;
 </p>
 
 <style>
-  .rvd-post-meta {
-    margin: 0;
-    color: var(--rvd-muted);
+  @layer components {
+    .rvd-post-meta {
+      margin: 0;
+      color: var(--rvd-muted);
+    }
   }
 </style>

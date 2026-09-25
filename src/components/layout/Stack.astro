@@ -11,12 +11,14 @@ const role = Tag === 'div' ? undefined : 'list';
 <Tag class:list={['rvd-stack', className]} role={role} style={`--rvd-stack-gap:${gap}px`}><slot /></Tag>
 
 <style>
-  .rvd-stack {
-    display: flex;
-    flex-direction: column;
-    gap: var(--rvd-stack-gap);
-    margin: 0;
-    padding: 0;
-    list-style: none;
+  @layer components {
+    .rvd-stack {
+      display: flex;
+      flex-direction: column;
+      gap: var(--rvd-stack-gap);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
   }
 </style>

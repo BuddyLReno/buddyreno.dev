@@ -25,10 +25,23 @@ test('Section passes tone, space, id, label, and extra attributes through', asyn
 
 test('Section keeps its own attributes when a caller passes colliding ones', async () => {
   const html = await render(Section, {
-    props: { tone: 'deep', 'data-rvd-tone': 'band', 'class:list': ['extra'] } as never,
+    props: {
+      tone: 'deep',
+      space: 'lg',
+      label: 'Mine',
+      'data-rvd-tone': 'band',
+      'data-rvd-space': 'sm',
+      'aria-label': 'Theirs',
+      'class:list': ['extra'],
+    } as never,
   });
-  expect(html.match(/data-rvd-tone="([^"]+)"/)?.[1]).toBe('deep');
-  expect(html.match(/<section[^>]*?class="([^"]+)"/)?.[1]).toContain('rvd-section');
+  const tag = html.match(/<section[^>]*>/)?.[0] ?? '';
+  const values = (attr: string) => [...tag.matchAll(new RegExp(`\\s${attr}="([^"]*)"`, 'g'))].map(([, v]) => v);
+  expect(values('data-rvd-tone')).toEqual(['deep']);
+  expect(values('data-rvd-space')).toEqual(['lg']);
+  expect(values('aria-label')).toEqual(['Mine']);
+  expect(values('class')).toHaveLength(1);
+  expect(values('class')[0]).toContain('rvd-section');
 });
 
 test('Container supports the wide measure', async () => {

@@ -19,22 +19,24 @@ const { appearance = 'primary', href, type = 'button' } = Astro.props;
 </wa-button>
 
 <style>
-  .rvd-button::part(button) {
-    gap: 12px;
-    height: auto;
-    padding: 12px 18px;
-    border-radius: var(--rvd-radius-lg);
-    font-family: var(--rvd-font-body);
-    font-size: var(--rvd-text-body-sm);
-    font-weight: 700;
-    transition: opacity var(--rvd-dur-fast);
-  }
+  @layer components {
+    .rvd-button::part(button) {
+      gap: 12px;
+      height: auto;
+      padding: 12px 18px;
+      border-radius: var(--rvd-radius-lg);
+      font-family: var(--rvd-font-body);
+      font-size: var(--rvd-text-body-sm);
+      font-weight: 700;
+      transition: opacity var(--rvd-dur-fast);
+    }
 
-  .rvd-button--primary:hover::part(button) {
-    opacity: 0.9;
-  }
+    .rvd-button--primary:hover::part(button) {
+      opacity: 0.9;
+    }
 
-  .rvd-button__sub {
-    opacity: 0.85;
+    .rvd-button__sub {
+      opacity: 0.85;
+    }
   }
 </style>

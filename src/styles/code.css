@@ -14,10 +14,12 @@
   --astro-code-token-link: var(--rvd-accent-text);
 }
 
-.astro-code {
-  padding: 16px 18px;
-  border-radius: var(--rvd-radius-lg);
-  font-family: var(--rvd-font-mono);
-  font-size: 14px;
-  line-height: 1.6;
+@layer components {
+  .astro-code {
+    padding: 16px 18px;
+    border-radius: var(--rvd-radius-lg);
+    font-family: var(--rvd-font-mono);
+    font-size: 14px;
+    line-height: 1.6;
+  }
 }

@@ -26,12 +26,14 @@ const { posts, empty = 'Nothing here yet.' } = Astro.props;
 }
 
 <style>
-  .rvd-post-list__empty,
-  .rvd-post-list__description {
-    color: var(--rvd-muted);
-  }
+  @layer components {
+    .rvd-post-list__empty,
+    .rvd-post-list__description {
+      color: var(--rvd-muted);
+    }
 
-  .rvd-post-list__empty {
-    margin: 0;
+    .rvd-post-list__empty {
+      margin: 0;
+    }
   }
 </style>

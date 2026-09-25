@@ -2,11 +2,20 @@
  * Section tones. Must load after tokens.css: these override the derived block
  * on the same element. Sections never nest (see DESIGN.md).
  */
-[data-rvd-tone] {
-  background-color: var(--rvd-bg);
-  color: var(--rvd-ink);
+@layer components {
+  [data-rvd-tone] {
+    background-color: var(--rvd-bg);
+    color: var(--rvd-ink);
+    transition:
+      background-color var(--rvd-dur-theme),
+      color var(--rvd-dur-theme);
+  }
 }
 
+/*
+ * Tone overrides stay UNLAYERED: they must beat the unlayered derived block in tokens.css
+ * (`:root, [data-rvd-tone]`). Inside a layer they would silently lose. A test enforces this.
+ */
 [data-rvd-tone='tint-1'] {
   --rvd-bg: var(--rvd-tint-1);
 }

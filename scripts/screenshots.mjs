@@ -19,6 +19,16 @@ await withPreview(async (base) => {
             window.rvd.setTheme(t);
             window.rvd.setMode(m);
           }, [theme, mode]);
+          // Mode changes fade body and tone colors, and even reduced-motion transitions need frames to
+          // finish (listeners may re-render a frame later). Settle until no animation is left running.
+          await page.evaluate(async () => {
+            const frame = () => new Promise((resolve) => requestAnimationFrame(resolve));
+            do {
+              await frame();
+              await frame();
+              await Promise.all(document.getAnimations().map((animation) => animation.finished));
+            } while (document.getAnimations().length > 0);
+          });
           const file = `screenshots/styleguide-${theme}-${mode}-${width}.png`;
           await page.screenshot({ path: file, fullPage: true });
           console.log(file);

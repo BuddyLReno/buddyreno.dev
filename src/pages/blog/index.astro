@@ -25,9 +25,11 @@ const posts = (await getCollection('posts', isPublished))
 </Base>
 
 <style>
-  .rvd-blog-index {
-    display: flex;
-    flex-direction: column;
-    gap: 28px;
+  @layer components {
+    .rvd-blog-index {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
   }
 </style>
