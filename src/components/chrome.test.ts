@@ -26,6 +26,12 @@ test('SiteHeader contains the wordmark and the toggle', async () => {
   expect(html).toContain('data-rvd-theme-toggle');
 });
 
+test('SiteHeader can omit the toggle', async () => {
+  const html = await render(SiteHeader, { props: { toggle: false } });
+  expect(html).toContain('rvd-wordmark');
+  expect(html).not.toContain('data-rvd-theme-toggle');
+});
+
 test('SiteFooter is a deep band with default and overridable slots', async () => {
   const year = new Date().getFullYear();
   const fallback = await render(SiteFooter);

@@ -68,6 +68,9 @@ every piece live at `/styleguide/` (`npm run dev`).
 - Don't name a `pages` entry `blog`, `projects`, or `styleguide`; those routes shadow it.
 - Don't import `webawesome.css` or `native.css`; only the default theme CSS is loaded.
 - Don't use a `<wa-*>` component without adding its import to `src/scripts/webawesome.ts`.
+- Don't rely on a `<wa-*>` component's own host padding/border (e.g. `wa-radio appearance="button"`): Tailwind's
+  preflight zeroes them and page rules beat WA's `:host` styles. Set them in the component's `<style>` instead
+  (see `ThemeToggle.astro`).
 
 ## Verify
 

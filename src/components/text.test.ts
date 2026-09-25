@@ -11,10 +11,10 @@ import TagList from './TagList.astro';
 test('Heading maps level and size, and renders an accent character', async () => {
   const html = await render(Heading, {
     props: { level: 1, size: 'hero', accent: '.' },
-    slots: { default: "Hi, I'm Alex" },
+    slots: { default: "Hi, I'm Buddy" },
   });
   expect(html).toMatch(/<h1[^>]*class="[^"]*type-display-hero/);
-  expect(html).toMatch(/Hi, I'm Alex<span[^>]*class="rvd-heading__accent"[^>]*>\.<\/span>/);
+  expect(html).toMatch(/Hi, I'm Buddy<span[^>]*class="rvd-heading__accent"[^>]*>\.<\/span>/);
 });
 
 test('Heading defaults to an h2 section heading without accent', async () => {

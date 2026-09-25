@@ -51,8 +51,11 @@ const { label = 'Color mode' } = Astro.props;
       border-radius: var(--rvd-radius-md);
     }
 
+    /* Tailwind's preflight zeroes padding on every element, which beats WA's
+       :host padding, so the segment padding (v3: 5px 9px) is set here. */
     .rvd-theme-toggle wa-radio {
       margin: 0;
+      padding: 5px 9px;
       border-radius: var(--rvd-radius-sm);
       color: var(--rvd-muted);
       font-family: var(--rvd-font-mono);
@@ -61,7 +64,7 @@ const { label = 'Color mode' } = Astro.props;
     }
 
     .rvd-theme-toggle wa-radio:state(checked) {
-      background-color: var(--rvd-surface);
+      background-color: var(--rvd-selected);
       color: var(--rvd-ink);
     }
   }

@@ -31,6 +31,7 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
   { fg: '--rvd-ink', bg: '--rvd-hover', min: 4.5, use: 'Card title on hover', tones: NOT_BAND },
   { fg: '--rvd-muted', bg: '--rvd-hover', min: 4.5, use: 'Card blurb on hover', tones: NOT_BAND },
   { fg: '--rvd-accent-text', bg: '--rvd-hover', min: 4.5, use: 'Card ↗ on hover', tones: ['base', 'deep'] },
+  { fg: '--rvd-ink', bg: '--rvd-selected', min: 4.5, use: 'Selected toggle option', tones: NOT_BAND },
   { fg: '--rvd-ink', bg: '--rvd-surface', min: 4.5, use: 'Selected toggle, code text', tones: NOT_BAND },
   { fg: '--rvd-muted', bg: '--rvd-surface', min: 4.5, use: 'Code comments', tones: NOT_BAND },
   { fg: '--rvd-accent-text', bg: '--rvd-surface', min: 4.5, use: 'Code keywords', tones: NOT_BAND },

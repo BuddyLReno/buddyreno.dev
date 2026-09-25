@@ -44,6 +44,7 @@
   --rvd-surface: color-mix(in oklab, var(--rvd-on-deep) 8%, var(--rvd-deep));
   --rvd-accent-l: 0.74;
   --rvd-accent-text-l: 0.74;
+  --rvd-selected-mix: 34%;
   --rvd-on-accent: oklch(0.17 0.015 268);
   color-scheme: dark;
 }

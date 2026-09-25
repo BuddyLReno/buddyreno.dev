@@ -2,12 +2,19 @@
 import ThemeToggle from '../ThemeToggle.astro';
 import Wordmark from '../Wordmark.astro';
 import Container from './Container.astro';
+
+interface Props {
+  /** Show the Light/Dark/System toggle. Off where a page provides its own (e.g. the styleguide toolbar). */
+  toggle?: boolean;
+}
+
+const { toggle = true } = Astro.props;
 ---
 <header class="rvd-site-header">
   <Container>
     <div class="rvd-site-header__row">
       <Wordmark first="Buddy" last="Reno" />
-      <ThemeToggle />
+      {toggle && <ThemeToggle />}
     </div>
   </Container>
 </header>

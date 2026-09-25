@@ -13,3 +13,17 @@ test('styleguide is noindex and has one contrast scope per tone', async () => {
     expect(html).toContain(`id="${id}"`);
   }
 });
+
+test('the sticky toolbar carries the mode toggle and theme select', async () => {
+  const html = await render(Styleguide);
+  const toolbar = html.match(/<nav[^>]*class="rvd-sg-toolbar"[\s\S]*?<\/nav>/)?.[0] ?? '';
+  expect(toolbar).toContain('data-rvd-theme-toggle');
+  expect(toolbar).toContain('data-rvd-theme-select');
+});
+
+test('the styleguide header has no toggle (the toolbar has it)', async () => {
+  const html = await render(Styleguide);
+  const header = html.match(/<header[^>]*class="rvd-site-header"[\s\S]*?<\/header>/)?.[0] ?? '';
+  expect(header).toContain('rvd-wordmark');
+  expect(header).not.toContain('data-rvd-theme-toggle');
+});

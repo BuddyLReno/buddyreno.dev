@@ -1,4 +1,6 @@
 ---
+import ThemeToggle from '../ThemeToggle.astro';
+
 const links = [
   ['color', 'Color'],
   ['type', 'Type'],
@@ -16,12 +18,15 @@ const themes = Object.keys(import.meta.glob('../../styles/themes/*.css'))
   <ul class="rvd-sg-toolbar__links type-label-sm">
     {links.map(([id, label]) => <li><a href={`#${id}`}>{label}</a></li>)}
   </ul>
-  <label class="rvd-sg-toolbar__theme type-label-sm">
-    Theme
-    <select data-rvd-theme-select>
-      {themes.map((theme) => <option value={theme}>{theme}</option>)}
-    </select>
-  </label>
+  <div class="rvd-sg-toolbar__controls">
+    <ThemeToggle />
+    <label class="rvd-sg-toolbar__theme type-label-sm">
+      <span class="rvd-sg-toolbar__theme-text">Theme</span>
+      <select data-rvd-theme-select>
+        {themes.map((theme) => <option value={theme}>{theme}</option>)}
+      </select>
+    </label>
+  </div>
 </nav>
 
 <style>
@@ -47,6 +52,34 @@ const themes = Object.keys(import.meta.glob('../../styles/themes/*.css'))
       margin: 0;
       padding: 0;
       list-style: none;
+    }
+
+    .rvd-sg-toolbar__controls {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+      gap: 24px;
+    }
+
+    /* Phones: links scroll sideways on one row; controls share the second. */
+    @media (max-width: 640px) {
+      .rvd-sg-toolbar__links {
+        flex-wrap: nowrap;
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 4px; /* room for link underlines inside the scroll box */
+        scrollbar-width: none;
+        white-space: nowrap;
+      }
+
+      .rvd-sg-toolbar__theme-text {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+      }
     }
 
     .rvd-sg-toolbar__theme {

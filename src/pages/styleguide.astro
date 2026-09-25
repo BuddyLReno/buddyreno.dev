@@ -3,6 +3,7 @@ import { getEntry, render } from 'astro:content';
 import Avatar from '../components/Avatar.astro';
 import Button from '../components/Button.astro';
 import CopyEmail from '../components/CopyEmail.astro';
+import SiteHeader from '../components/layout/SiteHeader.astro';
 import Heading from '../components/Heading.astro';
 import LabelList from '../components/LabelList.astro';
 import LabelRow from '../components/LabelRow.astro';
@@ -45,10 +46,11 @@ const colorTokens = [
   { token: '--rvd-band', on: '--rvd-on-band', note: 'Solid band' },
   { token: '--rvd-deep', on: '--rvd-on-deep', note: 'Contact / footer' },
   { token: '--rvd-hover', on: '--rvd-ink', note: 'Row / card hover' },
+  { token: '--rvd-selected', on: '--rvd-ink', note: 'Selected option (toggle)' },
 ];
 
 const typeRoles = [
-  ['type-display-hero', "Hi, I'm Alex", 'Big Shoulders 800 · clamp(52, 9vw, 76) / 0.9 · uppercase'],
+  ['type-display-hero', "Hi, I'm Buddy", 'Big Shoulders 800 · clamp(52, 9vw, 76) / 0.9 · uppercase'],
   ['type-display-xl', 'Say hello', 'Big Shoulders 800 · clamp(40, 7vw, 56) / 0.95 · uppercase'],
   ['type-display-section', "Things I've made", 'Big Shoulders 800 · 28 / 1 · uppercase · .02em'],
   ['type-wordmark', 'Buddy/Reno', 'Big Shoulders 800 · 22 / 1 · uppercase · .02em'],
@@ -71,6 +73,7 @@ const spaces = [
 const radii = ['--rvd-radius-sm', '--rvd-radius-md', '--rvd-radius-lg', '--rvd-radius-full'];
 ---
 <Base title="Rivendell styleguide" description="The Rivendell design system for buddyreno.dev." noindex>
+  <SiteHeader slot="header" toggle={false} />
   <Toolbar />
 
   <Section space="md" id="intro">
@@ -145,9 +148,9 @@ const radii = ['--rvd-radius-sm', '--rvd-radius-md', '--rvd-radius-lg', '--rvd-r
     <Stack gap={0}>
       <Heading>Components</Heading>
 
-      <Example title="Heading" props="level 1–4 · size hero | xl | section · accent?" code={`<Heading level={1} size="hero" accent=".">Hi, I'm Alex</Heading>`}>
+      <Example title="Heading" props="level 1–4 · size hero | xl | section · accent?" code={`<Heading level={1} size="hero" accent=".">Hi, I'm Buddy</Heading>`}>
         <Stack gap={14}>
-          <Heading level={1} size="hero" accent=".">Hi, I'm Alex</Heading>
+          <Heading level={1} size="hero" accent=".">Hi, I'm Buddy</Heading>
           <Heading level={2} size="xl" accent=".">Say hello</Heading>
           <Heading>Things I've made</Heading>
         </Stack>

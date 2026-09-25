@@ -17,7 +17,7 @@ export const jobs = [
 
 export const quotes = [
   {
-    text: 'Alex turned a messy spec into something customers actually love using — and made the rest of us better along the way.',
+    text: 'Buddy turned a messy spec into something customers actually love using — and made the rest of us better along the way.',
     name: 'Teammate Name',
     role: 'Staff Engineer, Company',
   },

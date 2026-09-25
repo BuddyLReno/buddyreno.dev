@@ -34,6 +34,7 @@
   --color-tint-1: var(--rvd-tint-1);
   --color-tint-2: var(--rvd-tint-2);
   --color-hover: var(--rvd-hover);
+  --color-selected: var(--rvd-selected);
   --font-display: var(--rvd-font-display);
   --font-body: var(--rvd-font-body);
   --font-mono: var(--rvd-font-mono);
