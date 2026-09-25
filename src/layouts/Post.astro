@@ -1,0 +1,45 @@
+---
+import Heading from '../components/Heading.astro';
+import Section from '../components/layout/Section.astro';
+import PostMeta from '../components/PostMeta.astro';
+import Prose from '../components/Prose.astro';
+import Base from './Base.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  date: Date;
+  updated?: Date;
+  tags: string[];
+  minutes: number;
+}
+
+const { title, description, date, updated, tags, minutes } = Astro.props;
+---
+<Base title={`${title} · Buddy Reno`} description={description}>
+  <Section space="lg">
+    <article class="rvd-post">
+      <header class="rvd-post__header">
+        <Heading level={1} size="xl" accent=".">{title}</Heading>
+        <PostMeta date={date} updated={updated} minutes={minutes} tags={tags} />
+      </header>
+      <Prose><slot /></Prose>
+    </article>
+  </Section>
+</Base>
+
+<style>
+  .rvd-post,
+  .rvd-post__header {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .rvd-post {
+    gap: 32px;
+  }
+
+  .rvd-post__header {
+    gap: 14px;
+  }
+</style>

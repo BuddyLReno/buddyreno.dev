@@ -1,0 +1,33 @@
+---
+import { getCollection } from 'astro:content';
+import Heading from '../../components/Heading.astro';
+import Section from '../../components/layout/Section.astro';
+import PostList from '../../components/PostList.astro';
+import Base from '../../layouts/Base.astro';
+import { isPublished } from '../../lib/content';
+
+const posts = (await getCollection('posts', isPublished))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .map((post) => ({
+    href: `/blog/${post.id}/`,
+    title: post.data.title,
+    date: post.data.date,
+    description: post.data.description,
+  }));
+---
+<Base title="Writing · Buddy Reno" description="Notes on frontend, design systems, and the web.">
+  <Section space="lg">
+    <div class="rvd-blog-index">
+      <Heading level={1} size="hero" accent=".">Writing</Heading>
+      <PostList posts={posts} />
+    </div>
+  </Section>
+</Base>
+
+<style>
+  .rvd-blog-index {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+</style>

@@ -1,0 +1,29 @@
+---
+import Heading from '../components/Heading.astro';
+import Section from '../components/layout/Section.astro';
+import Prose from '../components/Prose.astro';
+import Base from './Base.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+<Base title={`${title} · Buddy Reno`} description={description}>
+  <Section space="lg">
+    <div class="rvd-page">
+      <Heading level={1} size="hero" accent=".">{title}</Heading>
+      <Prose><slot /></Prose>
+    </div>
+  </Section>
+</Base>
+
+<style>
+  .rvd-page {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+</style>
