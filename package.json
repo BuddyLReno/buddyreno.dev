@@ -2,26 +2,50 @@
   "name": "buddyreno.dev",
   "version": "1.0.0",
   "description": "Personal site of Buddy Reno",
-  "main": "index.html",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:BuddyLReno/buddyreno.dev"
+  "directories": {
+    "doc": "docs"
   },
   "scripts": {
-    "serve": "browser-sync start --server --port 4000",
-    "build:styles": "node-sass assets/scss/main.scss assets/css/main.css && postcss -u autoprefixer --autoprefixer.browsers '> 2%, last 2 versions' -r assets/css/main.css",
-    "watch": "nodemon -e scss -x \"npm run build:styles\""
+    "test": "vitest run",
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "contrast": "astro build && node scripts/check-contrast.mjs",
+    "screenshots": "astro build && node scripts/screenshots.mjs"
   },
-  "author": "Buddy Reno",
-  "homepage": "https://buddyreno.dev",
-  "devDependencies": {
-    "autoprefixer": "^6.3.4",
-    "browser-sync": "^2.11.2",
-    "node-sass": "^3.4.2",
-    "nodemon": "^1.9.2",
-    "postcss-cli": "^2.5.1"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BuddyLReno/buddyreno.dev.git"
+  },
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/BuddyLReno/buddyreno.dev/issues"
+  },
+  "homepage": "https://github.com/BuddyLReno/buddyreno.dev#readme",
+  "private": "true",
+  "engines": {
+    "node": ">=22.12.0"
   },
   "dependencies": {
-    "normalize.css": "^4.0.0"
+    "@astrojs/mdx": "^8.0.2",
+    "@astrojs/sitemap": "^3.7.4",
+    "@awesome.me/webawesome": "^3.14.0",
+    "@fontsource-variable/manrope": "^5.3.0",
+    "@fontsource/big-shoulders-display": "^5.3.0",
+    "@fontsource/space-mono": "^5.3.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.3.5",
+    "culori": "^4.0.2",
+    "tailwindcss": "^4.3.3"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@types/culori": "^4.0.1",
+    "happy-dom": "^20.14.5",
+    "playwright": "^1.63.0",
+    "postcss": "^8.5.28",
+    "typescript": "^6.0.3",
+    "vitest": "^5.0.1"
   }
 }

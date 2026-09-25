@@ -1,5 +1,6 @@
-_site
-.sass-cache
-.publish
-
-node_modules
+node_modules/
+dist/
+.astro/
+screenshots/
+.DS_Store
+.superpowers/
