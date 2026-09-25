@@ -1,0 +1,93 @@
+/*
+ * Rivendell tokens.
+ * Inputs: raw values per mode (this file) and per theme (themes/*.css).
+ * Derived: anything whose value uses var() lives in the `:root, [data-rvd-tone]`
+ * block so it re-resolves inside every section tone (spec §6, re-derivation rule).
+ */
+:root {
+  /* Theme inputs (defaults equal the teal-amber theme) */
+  --rvd-hue-1: 200;
+  --rvd-hue-2: 70;
+  --rvd-accent-c: 0.1;
+
+  /* Mode inputs: light */
+  --rvd-accent-l: 0.53;
+  --rvd-accent-text-l: 0.48;
+  --rvd-band-l: 0.5;
+  --rvd-band-c: 0.1;
+  --rvd-canvas: oklch(0.98 0.004 260);
+  --rvd-surface: oklch(0.955 0.006 260);
+  --rvd-ink: oklch(0.21 0.02 265);
+  --rvd-muted: oklch(0.45 0.018 265);
+  --rvd-line: oklch(0.21 0.02 265 / 0.12);
+  --rvd-on-accent: oklch(0.99 0.003 260);
+  --rvd-deep: oklch(0.21 0.02 265);
+  --rvd-on-deep: oklch(0.97 0.004 260);
+  --rvd-on-band: oklch(0.99 0.003 260);
+  color-scheme: light;
+
+  /* Type */
+  --rvd-font-display: 'Big Shoulders Display', 'Arial Narrow', sans-serif;
+  --rvd-font-body: 'Manrope Variable', system-ui, sans-serif;
+  --rvd-font-mono: 'Space Mono', ui-monospace, monospace;
+  --rvd-text-hero: clamp(52px, 9vw, 76px);
+  --rvd-text-xl: clamp(40px, 7vw, 56px);
+  --rvd-text-section: 28px;
+  --rvd-text-wordmark: 22px;
+  --rvd-text-body-lg: 19px;
+  --rvd-text-body: 18px;
+  --rvd-text-body-md: 17px;
+  --rvd-text-body-sm: 16px;
+  --rvd-text-ui: 15px;
+  --rvd-text-caption: 14px;
+  --rvd-text-label: 12px;
+  --rvd-text-label-sm: 11px;
+
+  /* Layout */
+  --rvd-measure: 720px;
+  --rvd-measure-wide: 1040px;
+  --rvd-gutter: clamp(20px, 5vw, 32px);
+  --rvd-section-sm: 56px;
+  --rvd-section-md: 64px;
+  --rvd-section-lg: 72px;
+  --rvd-radius-sm: 5px;
+  --rvd-radius-md: 8px;
+  --rvd-radius-lg: 10px;
+  --rvd-radius-full: 9999px;
+
+  /* Motion */
+  --rvd-dur-fast: 0.15s;
+  --rvd-dur-theme: 0.3s;
+}
+
+/* Mode inputs: dark */
+:root[data-rvd-mode='dark'] {
+  --rvd-accent-l: 0.74;
+  --rvd-accent-text-l: 0.74;
+  --rvd-band-l: 0.3;
+  --rvd-band-c: 0.06;
+  --rvd-canvas: oklch(0.17 0.015 268);
+  --rvd-surface: oklch(0.215 0.018 268);
+  --rvd-ink: oklch(0.95 0.006 260);
+  --rvd-muted: oklch(0.74 0.016 265);
+  --rvd-line: oklch(0.95 0.006 260 / 0.12);
+  --rvd-on-accent: oklch(0.17 0.015 268);
+  --rvd-deep: oklch(0.13 0.014 268);
+  --rvd-on-deep: oklch(0.95 0.006 260);
+  --rvd-on-band: oklch(0.95 0.006 260);
+  color-scheme: dark;
+}
+
+/* Derived semantic tokens */
+:root,
+[data-rvd-tone] {
+  --rvd-bg: var(--rvd-canvas);
+  --rvd-accent: oklch(var(--rvd-accent-l) var(--rvd-accent-c) var(--rvd-hue-1));
+  --rvd-accent-text: oklch(var(--rvd-accent-text-l) var(--rvd-accent-c) var(--rvd-hue-1));
+  --rvd-accent-2: oklch(var(--rvd-accent-l) var(--rvd-accent-c) var(--rvd-hue-2));
+  --rvd-accent-2-text: oklch(var(--rvd-accent-text-l) var(--rvd-accent-c) var(--rvd-hue-2));
+  --rvd-band: oklch(var(--rvd-band-l) var(--rvd-band-c) var(--rvd-hue-1));
+  --rvd-tint-1: color-mix(in oklab, var(--rvd-accent) 13%, var(--rvd-canvas));
+  --rvd-tint-2: color-mix(in oklab, var(--rvd-accent-2) 16%, var(--rvd-canvas));
+  --rvd-hover: color-mix(in oklab, var(--rvd-accent) 12%, var(--rvd-bg));
+}

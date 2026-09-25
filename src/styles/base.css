@@ -1,0 +1,61 @@
+@layer base {
+  body {
+    margin: 0;
+    background-color: var(--rvd-bg);
+    color: var(--rvd-ink);
+    font-family: var(--rvd-font-body);
+    font-size: var(--rvd-text-body);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition:
+      background-color var(--rvd-dur-theme),
+      color var(--rvd-dur-theme);
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  a {
+    color: inherit;
+    text-decoration-line: underline;
+    text-decoration-color: color-mix(in oklab, var(--rvd-accent) 60%, transparent);
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 3px;
+    transition:
+      color var(--rvd-dur-fast),
+      text-decoration-color var(--rvd-dur-fast);
+  }
+
+  a:hover {
+    color: var(--rvd-accent-text);
+    text-decoration-color: var(--rvd-accent);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--rvd-accent);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background-color: var(--rvd-accent);
+    color: var(--rvd-on-accent);
+  }
+
+  /* Hide web components until registered (avoids a flash of unstyled controls). */
+  :not(:defined) {
+    visibility: hidden;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

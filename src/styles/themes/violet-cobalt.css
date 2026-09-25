@@ -1,0 +1,5 @@
+/* Theme: violet-cobalt (working name). Sets color inputs only. */
+:root[data-rvd-theme='violet-cobalt'] {
+  --rvd-hue-1: 300;
+  --rvd-hue-2: 262;
+}

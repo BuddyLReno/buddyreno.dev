@@ -1,0 +1,40 @@
+/*
+ * Section tones. Must load after tokens.css: these override the derived block
+ * on the same element. Sections never nest (see DESIGN.md).
+ */
+[data-rvd-tone] {
+  background-color: var(--rvd-bg);
+  color: var(--rvd-ink);
+}
+
+[data-rvd-tone='tint-1'] {
+  --rvd-bg: var(--rvd-tint-1);
+}
+
+[data-rvd-tone='tint-2'] {
+  --rvd-bg: var(--rvd-tint-2);
+}
+
+[data-rvd-tone='band'] {
+  --rvd-bg: var(--rvd-band);
+  --rvd-ink: var(--rvd-on-band);
+  --rvd-muted: var(--rvd-on-band);
+  --rvd-line: color-mix(in oklab, var(--rvd-on-band) 15%, transparent);
+  --rvd-surface: color-mix(in oklab, var(--rvd-on-band) 12%, var(--rvd-band));
+  --rvd-accent: var(--rvd-on-band);
+  --rvd-accent-text: var(--rvd-on-band);
+  --rvd-on-accent: var(--rvd-band);
+}
+
+/* Deep is always a dark surface, so it uses the dark-mode accent lightness. */
+[data-rvd-tone='deep'] {
+  --rvd-bg: var(--rvd-deep);
+  --rvd-ink: var(--rvd-on-deep);
+  --rvd-muted: color-mix(in oklab, var(--rvd-on-deep) 75%, var(--rvd-deep));
+  --rvd-line: color-mix(in oklab, var(--rvd-on-deep) 12%, var(--rvd-deep));
+  --rvd-surface: color-mix(in oklab, var(--rvd-on-deep) 8%, var(--rvd-deep));
+  --rvd-accent-l: 0.74;
+  --rvd-accent-text-l: 0.74;
+  --rvd-on-accent: oklch(0.17 0.015 268);
+  color-scheme: dark;
+}
