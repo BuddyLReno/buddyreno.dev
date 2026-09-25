@@ -1,0 +1,42 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import type { Space, Tone, Width } from '../types';
+import Container from './Container.astro';
+
+interface Props
+  extends Omit<
+    HTMLAttributes<'section'>,
+    'class' | 'class:list' | 'data-rvd-tone' | 'data-rvd-space' | 'aria-label'
+  > {
+  tone?: Tone;
+  space?: Space;
+  width?: Width;
+  label?: string;
+  class?: string;
+}
+
+const { tone = 'base', space = 'md', width = 'measure', label, class: className, ...rest } = Astro.props;
+---
+<section
+  aria-label={label}
+  class:list={['rvd-section', className]}
+  data-rvd-tone={tone}
+  data-rvd-space={space}
+  {...rest}
+>
+  <Container width={width}><slot /></Container>
+</section>
+
+<style>
+  .rvd-section[data-rvd-space='sm'] {
+    padding-block: var(--rvd-section-sm);
+  }
+
+  .rvd-section[data-rvd-space='md'] {
+    padding-block: var(--rvd-section-md);
+  }
+
+  .rvd-section[data-rvd-space='lg'] {
+    padding-block: var(--rvd-section-lg);
+  }
+</style>

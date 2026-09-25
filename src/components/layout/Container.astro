@@ -1,0 +1,23 @@
+---
+import type { Width } from '../types';
+
+interface Props {
+  width?: Width;
+  class?: string;
+}
+
+const { width = 'measure', class: className } = Astro.props;
+---
+<div class:list={['rvd-container', className]} data-rvd-width={width}><slot /></div>
+
+<style>
+  .rvd-container {
+    max-width: var(--rvd-measure);
+    margin-inline: auto;
+    padding-inline: var(--rvd-gutter);
+  }
+
+  .rvd-container[data-rvd-width='wide'] {
+    max-width: var(--rvd-measure-wide);
+  }
+</style>

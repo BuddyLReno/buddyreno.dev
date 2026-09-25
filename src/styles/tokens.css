@@ -54,6 +54,7 @@
   --rvd-radius-md: 8px;
   --rvd-radius-lg: 10px;
   --rvd-radius-full: 9999px;
+  --rvd-stack-gap: 16px;
 
   /* Motion */
   --rvd-dur-fast: 0.15s;
@@ -87,6 +88,7 @@
   --rvd-accent-2: oklch(var(--rvd-accent-l) var(--rvd-accent-c) var(--rvd-hue-2));
   --rvd-accent-2-text: oklch(var(--rvd-accent-text-l) var(--rvd-accent-c) var(--rvd-hue-2));
   --rvd-band: oklch(var(--rvd-band-l) var(--rvd-band-c) var(--rvd-hue-1));
+  /* Tints mix with --rvd-canvas, never --rvd-bg: tint tones set bg = tint (a cycle otherwise). */
   --rvd-tint-1: color-mix(in oklab, var(--rvd-accent) 13%, var(--rvd-canvas));
   --rvd-tint-2: color-mix(in oklab, var(--rvd-accent-2) 16%, var(--rvd-canvas));
   --rvd-hover: color-mix(in oklab, var(--rvd-accent) 12%, var(--rvd-bg));

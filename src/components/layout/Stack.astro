@@ -1,0 +1,22 @@
+---
+interface Props {
+  as?: 'div' | 'ul' | 'ol';
+  gap?: number;
+  class?: string;
+}
+
+const { as: Tag = 'div', gap = 16, class: className } = Astro.props;
+const role = Tag === 'div' ? undefined : 'list';
+---
+<Tag class:list={['rvd-stack', className]} role={role} style={`--rvd-stack-gap:${gap}px`}><slot /></Tag>
+
+<style>
+  .rvd-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rvd-stack-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+</style>
