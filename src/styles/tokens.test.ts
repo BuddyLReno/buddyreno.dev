@@ -90,3 +90,16 @@ test('themes set only color inputs, scoped to their own name', () => {
     expect(props).toEqual(expect.arrayContaining(['--rvd-hue-1', '--rvd-hue-2']));
   }
 });
+
+test('webawesome-theme.css only overrides tokens Web Awesome defines', () => {
+  const waDefault = readFileSync(
+    resolve('node_modules/@awesome.me/webawesome/dist/styles/themes/default.css'),
+    'utf8',
+  );
+  const known = new Set([...waDefault.matchAll(/(--wa-[a-z0-9-]+)\s*:/g)].map(([, name]) => name));
+  const unknown: string[] = [];
+  parse(join(STYLES, 'webawesome-theme.css')).walkDecls(/^--wa-/, (decl) => {
+    if (!known.has(decl.prop)) unknown.push(decl.prop);
+  });
+  expect(unknown).toEqual([]);
+});

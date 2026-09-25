@@ -1,0 +1,58 @@
+/*
+ * Web Awesome → Rivendell. The only place --wa-* tokens are overridden.
+ * Also declared on [data-rvd-tone] so WA components recolor inside section tones.
+ */
+@layer wa-theme-overrides {
+  :where(:root),
+  .wa-light,
+  .wa-dark,
+  .wa-invert,
+  [data-rvd-tone] {
+    --wa-font-family-body: var(--rvd-font-body);
+    --wa-font-family-heading: var(--rvd-font-display);
+    --wa-font-family-code: var(--rvd-font-mono);
+    --wa-font-family-longform: var(--rvd-font-body);
+    --wa-border-radius-s: var(--rvd-radius-sm);
+    --wa-border-radius-m: var(--rvd-radius-md);
+    --wa-border-radius-l: var(--rvd-radius-lg);
+    --wa-transition-fast: var(--rvd-dur-fast);
+
+    --wa-color-surface-default: var(--rvd-bg);
+    --wa-color-surface-raised: var(--rvd-surface);
+    --wa-color-surface-lowered: var(--rvd-surface);
+    --wa-color-surface-border: var(--rvd-line);
+    --wa-color-text-normal: var(--rvd-ink);
+    --wa-color-text-quiet: var(--rvd-muted);
+    --wa-color-text-link: var(--rvd-accent-text);
+    --wa-color-focus: var(--rvd-accent);
+
+    --wa-color-brand-fill-loud: var(--rvd-accent);
+    --wa-color-brand-on-loud: var(--rvd-on-accent);
+    --wa-color-brand-fill-normal: color-mix(in oklab, var(--rvd-accent) 22%, var(--rvd-bg));
+    --wa-color-brand-on-normal: var(--rvd-ink);
+    --wa-color-brand-fill-quiet: var(--rvd-hover);
+    --wa-color-brand-on-quiet: var(--rvd-ink);
+    --wa-color-brand-border-loud: var(--rvd-accent);
+    --wa-color-brand-border-normal: color-mix(in oklab, var(--rvd-accent) 45%, var(--rvd-bg));
+    --wa-color-brand-border-quiet: var(--rvd-line);
+
+    --wa-color-neutral-fill-loud: var(--rvd-ink);
+    --wa-color-neutral-on-loud: var(--rvd-bg);
+    --wa-color-neutral-fill-normal: var(--rvd-surface);
+    --wa-color-neutral-on-normal: var(--rvd-ink);
+    --wa-color-neutral-fill-quiet: var(--rvd-surface);
+    --wa-color-neutral-on-quiet: var(--rvd-ink);
+    --wa-color-neutral-border-loud: var(--rvd-ink);
+    --wa-color-neutral-border-normal: color-mix(in oklab, var(--rvd-ink) 30%, var(--rvd-bg));
+    --wa-color-neutral-border-quiet: var(--rvd-line);
+
+    --wa-form-control-activated-color: var(--rvd-accent);
+    --wa-form-control-border-color: color-mix(in oklab, var(--rvd-ink) 30%, var(--rvd-bg));
+    --wa-form-control-background-color: var(--rvd-bg);
+    --wa-form-control-value-color: var(--rvd-ink);
+    --wa-form-control-label-color: var(--rvd-ink);
+    --wa-form-control-hint-color: var(--rvd-muted);
+    --wa-tooltip-background-color: var(--rvd-ink);
+    --wa-tooltip-content-color: var(--rvd-bg);
+  }
+}
