@@ -1,0 +1,44 @@
+---
+interface Props {
+  token: string;
+  on?: string;
+  note?: string;
+}
+
+const { token, on, note } = Astro.props;
+---
+<div class="rvd-swatch" data-rvd-swatch={token} data-rvd-swatch-on={on}>
+  <span class="rvd-swatch__chip" style={`background: var(${token})`}></span>
+  <span class="rvd-swatch__meta">
+    <code class="type-label">{token}</code>
+    <span class="type-label-sm rvd-swatch__muted" data-value>…</span>
+    {on && <span class="type-label-sm" data-ratio></span>}
+    {note && <span class="type-caption rvd-swatch__muted">{note}</span>}
+  </span>
+</div>
+
+<style>
+  .rvd-swatch {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .rvd-swatch__chip {
+    flex: 0 0 48px;
+    height: 48px;
+    border: 1px solid var(--rvd-line);
+    border-radius: var(--rvd-radius-md);
+  }
+
+  .rvd-swatch__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .rvd-swatch__muted {
+    color: var(--rvd-muted);
+  }
+</style>

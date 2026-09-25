@@ -1,0 +1,40 @@
+---
+import { Code } from 'astro:components';
+
+interface Props {
+  title: string;
+  props?: string;
+  code: string;
+}
+
+const { title, props, code } = Astro.props;
+---
+<article class="rvd-example">
+  <header class="rvd-example__header">
+    <h3 class="type-label">{title}</h3>
+    {props && <p class="type-caption rvd-example__props">{props}</p>}
+  </header>
+  <div class="rvd-example__demo"><slot /></div>
+  <wa-details summary="Usage" class="rvd-example__code">
+    <Code code={code} lang="astro" theme="css-variables" />
+  </wa-details>
+</article>
+
+<style>
+  .rvd-example {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding-block: 28px;
+    border-top: 1px solid var(--rvd-line);
+  }
+
+  .rvd-example__header h3,
+  .rvd-example__props {
+    margin: 0;
+  }
+
+  .rvd-example__props {
+    color: var(--rvd-muted);
+  }
+</style>

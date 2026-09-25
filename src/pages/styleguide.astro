@@ -1,0 +1,340 @@
+---
+import { getEntry, render } from 'astro:content';
+import Avatar from '../components/Avatar.astro';
+import Button from '../components/Button.astro';
+import CopyEmail from '../components/CopyEmail.astro';
+import Heading from '../components/Heading.astro';
+import LabelList from '../components/LabelList.astro';
+import LabelRow from '../components/LabelRow.astro';
+import Section from '../components/layout/Section.astro';
+import Stack from '../components/layout/Stack.astro';
+import LinkCard from '../components/LinkCard.astro';
+import LinkList from '../components/LinkList.astro';
+import PostList from '../components/PostList.astro';
+import PostMeta from '../components/PostMeta.astro';
+import ProjectHeader from '../components/ProjectHeader.astro';
+import Prose from '../components/Prose.astro';
+import Quote from '../components/Quote.astro';
+import SocialLinks from '../components/SocialLinks.astro';
+import StatusDot from '../components/StatusDot.astro';
+import Example from '../components/styleguide/Example.astro';
+import { email, jobs, quotes, social, work } from '../components/styleguide/sample';
+import Swatch from '../components/styleguide/Swatch.astro';
+import Toolbar from '../components/styleguide/Toolbar.astro';
+import TagList from '../components/TagList.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
+import { TONES } from '../components/types';
+import Base from '../layouts/Base.astro';
+
+const samplePost = await getEntry('posts', 'sample-post');
+const { Content: SamplePost } = samplePost ? await render(samplePost) : { Content: null };
+
+const colorTokens = [
+  { token: '--rvd-bg', note: 'Current surface background' },
+  { token: '--rvd-surface', on: '--rvd-ink', note: 'Raised / selected' },
+  { token: '--rvd-ink', on: '--rvd-bg', note: 'Primary text' },
+  { token: '--rvd-muted', on: '--rvd-bg', note: 'Secondary text' },
+  { token: '--rvd-line', note: 'Hairlines (12% ink)' },
+  { token: '--rvd-accent', on: '--rvd-bg', note: 'Fills, underlines, display accents' },
+  { token: '--rvd-accent-text', on: '--rvd-bg', note: 'Accent-colored body text' },
+  { token: '--rvd-accent-2', note: 'Secondary accent' },
+  { token: '--rvd-accent-2-text', on: '--rvd-surface', note: 'Secondary accent text (code)' },
+  { token: '--rvd-on-accent', on: '--rvd-accent', note: 'Text on accent fill' },
+  { token: '--rvd-tint-1', on: '--rvd-ink', note: '"Now" band' },
+  { token: '--rvd-tint-2', on: '--rvd-ink', note: '"Kind words" band' },
+  { token: '--rvd-band', on: '--rvd-on-band', note: 'Solid band' },
+  { token: '--rvd-deep', on: '--rvd-on-deep', note: 'Contact / footer' },
+  { token: '--rvd-hover', on: '--rvd-ink', note: 'Row / card hover' },
+];
+
+const typeRoles = [
+  ['type-display-hero', "Hi, I'm Alex", 'Big Shoulders 800 · clamp(52, 9vw, 76) / 0.9 · uppercase'],
+  ['type-display-xl', 'Say hello', 'Big Shoulders 800 · clamp(40, 7vw, 56) / 0.95 · uppercase'],
+  ['type-display-section', "Things I've made", 'Big Shoulders 800 · 28 / 1 · uppercase · .02em'],
+  ['type-wordmark', 'Buddy/Reno', 'Big Shoulders 800 · 22 / 1 · uppercase · .02em'],
+  ['type-body-lg', 'Ruby on Rails, Hotwire, Stimulus, TypeScript, Web Components.', 'Manrope 500 · 19 / 1.65'],
+  ['type-body', "I'm a full-stack developer near Nashville, Tennessee.", 'Manrope 400 · 18 / 1.65'],
+  ['type-body-md', 'Senior Software Engineer · Company One', 'Manrope 400 · 17 / 1.5'],
+  ['type-body-sm', 'One line on what it does and why it mattered.', 'Manrope 400 · 16 / 1.5'],
+  ['type-ui', 'GitHub  LinkedIn  Email', 'Manrope 600 · 15 / 1.4'],
+  ['type-caption', '© 2026 Buddy Reno', 'Manrope 400 · 14 / 1.4'],
+  ['type-label', '2022 — Now', 'Space Mono 400 · 12 · uppercase'],
+  ['type-label-sm', 'Rails · Hotwire', 'Space Mono 400 · 11 · uppercase'],
+];
+
+const spaces = [
+  ['--rvd-section-sm', '56'],
+  ['--rvd-section-md', '64'],
+  ['--rvd-section-lg', '72'],
+  ['--rvd-gutter', 'clamp(20, 5vw, 32)'],
+];
+const radii = ['--rvd-radius-sm', '--rvd-radius-md', '--rvd-radius-lg', '--rvd-radius-full'];
+---
+<Base title="Rivendell styleguide" description="The Rivendell design system for buddyreno.dev." noindex>
+  <Toolbar />
+
+  <Section space="md" id="intro">
+    <Stack gap={14}>
+      <Heading level={1} size="hero" accent=".">Rivendell</Heading>
+      <p class="type-body-lg">The design system for buddyreno.dev. Switch mode in the header and theme in the toolbar; everything below re-renders live.</p>
+    </Stack>
+  </Section>
+
+  <Section id="color" label="Color">
+    <Stack gap={20}>
+      <Heading>Color</Heading>
+      <div class="rvd-sg-grid">
+        {colorTokens.map((item) => <Swatch {...item} />)}
+      </div>
+    </Stack>
+  </Section>
+
+  <Section id="type" label="Type">
+    <Stack gap={20}>
+      <Heading>Type</Heading>
+      {typeRoles.map(([role, sample, spec]) => (
+        <div class="rvd-sg-type">
+          <p class={role}>{sample}</p>
+          <p class="type-label-sm rvd-sg-muted">{role} · {spec}</p>
+        </div>
+      ))}
+    </Stack>
+  </Section>
+
+  <Section id="scale" label="Space, radius, motion">
+    <Stack gap={20}>
+      <Heading>Space, radius, motion</Heading>
+      {spaces.map(([token, value]) => (
+        <div class="rvd-sg-space">
+          <span class="rvd-sg-space__bar" style={`width: var(${token})`}></span>
+          <code class="type-label-sm">{token} · {value}</code>
+        </div>
+      ))}
+      <div class="rvd-sg-radii">
+        {radii.map((token) => (
+          <div class="rvd-sg-radius" style={`border-radius: var(${token})`}><code class="type-label-sm">{token}</code></div>
+        ))}
+      </div>
+      <p class="type-caption rvd-sg-muted">Motion: --rvd-dur-fast 0.15s (hover), --rvd-dur-theme 0.3s (mode change). Disabled under prefers-reduced-motion.</p>
+    </Stack>
+  </Section>
+
+  <div id="tones">
+    {TONES.map((tone) => (
+      <Section tone={tone} label={`Tone: ${tone}`} data-rvd-contrast-scope>
+        <Stack gap={16}>
+          <p class="type-label">tone="{tone}"</p>
+          <Heading accent=".">Section heading</Heading>
+          <p>Body copy with <a href="#tones">a link</a> in it.</p>
+          <p class="rvd-sg-muted-text">Muted secondary copy.</p>
+          <LabelList>
+            <LabelRow label="Building"><a href="#tones">Side project name</a> — a small, useful thing.</LabelRow>
+          </LabelList>
+          <div class="rvd-sg-row">
+            <Button>Primary<span slot="sub">Sub</span></Button>
+            <Button appearance="quiet">Quiet</Button>
+            <StatusDot>Open to new projects</StatusDot>
+          </div>
+          <ul class="rvd-sg-readout type-label-sm" data-rvd-contrast-readout></ul>
+        </Stack>
+      </Section>
+    ))}
+  </div>
+
+  <Section id="components" label="Components">
+    <Stack gap={0}>
+      <Heading>Components</Heading>
+
+      <Example title="Heading" props="level 1–4 · size hero | xl | section · accent?" code={`<Heading level={1} size="hero" accent=".">Hi, I'm Alex</Heading>`}>
+        <Stack gap={14}>
+          <Heading level={1} size="hero" accent=".">Hi, I'm Alex</Heading>
+          <Heading level={2} size="xl" accent=".">Say hello</Heading>
+          <Heading>Things I've made</Heading>
+        </Stack>
+      </Example>
+
+      <Example title="Avatar" props="src? · label" code={`<Avatar src={me.src} label="Buddy Reno" />`}>
+        <div class="rvd-sg-row"><Avatar label="Placeholder photo" /></div>
+      </Example>
+
+      <Example title="StatusDot" props="pulse?" code={`<StatusDot pulse>Open to new projects</StatusDot>`}>
+        <Stack gap={8}>
+          <StatusDot>Open to new projects</StatusDot>
+          <StatusDot pulse>Pulsing (respects reduced motion)</StatusDot>
+        </Stack>
+      </Example>
+
+      <Example title="SocialLinks" props="links: { label, href }[] · label?" code={`<SocialLinks links={[{ label: 'GitHub', href: '…' }]} />`}>
+        <SocialLinks links={social} />
+      </Example>
+
+      <Example title="LabelList + LabelRow" props="LabelList closed? · LabelRow label" code={`<LabelList>\n  <LabelRow label="2022 — Now"><strong>Senior Software Engineer</strong> · Company One</LabelRow>\n</LabelList>`}>
+        <LabelList closed={false}>
+          {jobs.map((job) => (
+            <LabelRow label={job.when}><strong>{job.role}</strong> <span class="rvd-sg-muted-text">· {job.co}</span></LabelRow>
+          ))}
+        </LabelList>
+      </Example>
+
+      <Example title="LinkList + LinkCard" props="href · title · tags? · external? · slot = blurb" code={`<LinkList>\n  <LinkCard href="…" title="Project name" tags={['Rails', 'Hotwire']} external>One line on what it does.</LinkCard>\n</LinkList>`}>
+        <LinkList>
+          {work.map((item) => (
+            <LinkCard href="#components" title={item.name} tags={item.tags} external>{item.blurb}</LinkCard>
+          ))}
+        </LinkList>
+      </Example>
+
+      <Example title="Quote" props="name · role? · slot = text" code={`<Quote name="Teammate Name" role="Staff Engineer, Company">…</Quote>`}>
+        <Stack gap={28}>
+          {quotes.map((quote) => <Quote name={quote.name} role={quote.role}>{quote.text}</Quote>)}
+        </Stack>
+      </Example>
+
+      <Example title="TagList" props="tags: string[]" code={`<TagList tags={['Rails', 'Hotwire']} />`}>
+        <TagList tags={['Rails', 'Hotwire', 'Web Components']} />
+      </Example>
+
+      <Example title="Button" props="appearance primary | quiet · href? · type? · slot sub" code={`<Button>Say hello<span slot="sub">Copy</span></Button>\n<Button appearance="quiet" href="/blog/">Read the blog</Button>`}>
+        <div class="rvd-sg-row">
+          <Button>Say hello<span slot="sub">Copy</span></Button>
+          <Button appearance="quiet" href="#components">Quiet link</Button>
+        </div>
+      </Example>
+
+      <Example title="CopyEmail" props="email" code={`<CopyEmail email="hello@example.com" />`}>
+        <CopyEmail email={email} />
+      </Example>
+
+      <Example title="ThemeToggle" props="label?" code={`<ThemeToggle />`}>
+        <ThemeToggle label="Color mode (styleguide copy)" />
+      </Example>
+
+      <Example title="PostMeta" props="date · updated? · minutes? · tags?" code={`<PostMeta date={post.data.date} minutes={4} tags={post.data.tags} />`}>
+        <PostMeta date={new Date('2026-09-24')} minutes={4} tags={['CSS', 'Design systems']} />
+      </Example>
+
+      <Example title="PostList" props="posts: { href, title, date, description? }[] · empty?" code={`<PostList posts={posts} />`}>
+        <Stack gap={20}>
+          <PostList posts={[
+            { href: '#components', title: 'A placeholder post title', date: new Date('2026-09-24'), description: 'One sentence summary.' },
+            { href: '#components', title: 'An older post', date: new Date('2026-06-02') },
+          ]} />
+          <PostList posts={[]} />
+        </Stack>
+      </Example>
+
+      <Example title="ProjectHeader" props="name · blurb? · tags? · url? · repo? · cover?" code={`<ProjectHeader name="Side project" blurb="…" tags={['Astro']} url="…" repo="…" />`}>
+        <ProjectHeader name="Side project" blurb="Small, useful, and shipped." tags={['Web Components', 'Astro']} url="https://example.com" repo="https://github.com/BuddyLReno" />
+      </Example>
+    </Stack>
+  </Section>
+
+  <Section id="web-awesome" label="Web Awesome">
+    <Stack gap={20}>
+      <Heading>Web Awesome</Heading>
+      <p class="rvd-sg-muted-text">Registered components, themed through webawesome-theme.css.</p>
+      <div class="rvd-sg-row">
+        <wa-button variant="brand">Brand</wa-button>
+        <wa-button variant="brand" appearance="outlined">Outlined</wa-button>
+        <wa-button variant="neutral" appearance="filled">Neutral</wa-button>
+        <wa-button variant="brand" appearance="plain">Plain</wa-button>
+        <wa-copy-button value="Copied from the styleguide"></wa-copy-button>
+      </div>
+      <div class="rvd-sg-row">
+        <wa-tooltip for="rvd-sg-tip">Tooltip text</wa-tooltip>
+        <wa-button id="rvd-sg-tip" appearance="outlined" variant="neutral">Hover for tooltip</wa-button>
+        <wa-button appearance="outlined" variant="neutral" data-rvd-open-dialog>Open dialog</wa-button>
+      </div>
+      <wa-details summary="Details">Disclosure content uses surface, line, and ink tokens.</wa-details>
+      <wa-dialog label="Dialog" data-rvd-sg-dialog>
+        Dialog body copy.
+        <wa-button slot="footer" variant="brand" data-dialog="close">Close</wa-button>
+      </wa-dialog>
+    </Stack>
+  </Section>
+
+  <Section id="prose" label="Prose">
+    <Stack gap={20}>
+      <Heading>Prose</Heading>
+      <Prose>{SamplePost ? <SamplePost /> : <p>Sample post missing.</p>}</Prose>
+    </Stack>
+  </Section>
+</Base>
+
+<script>
+  import '../scripts/styleguide.ts';
+
+  document.querySelector('[data-rvd-open-dialog]')?.addEventListener('click', () => {
+    const dialog = document.querySelector<HTMLElement & { open: boolean }>('[data-rvd-sg-dialog]');
+    if (dialog) dialog.open = true;
+  });
+</script>
+
+<style>
+  .rvd-sg-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 18px;
+  }
+
+  .rvd-sg-type p {
+    margin: 0;
+  }
+
+  .rvd-sg-muted,
+  .rvd-sg-muted-text {
+    color: var(--rvd-muted);
+  }
+
+  .rvd-sg-muted-text {
+    margin: 0;
+  }
+
+  .rvd-sg-space {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .rvd-sg-space__bar {
+    height: 14px;
+    border-radius: var(--rvd-radius-sm);
+    background: var(--rvd-accent);
+  }
+
+  .rvd-sg-radii {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  .rvd-sg-radius {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 72px;
+    border: 1px solid var(--rvd-line);
+    background: var(--rvd-surface);
+  }
+
+  .rvd-sg-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 20px;
+  }
+
+  .rvd-sg-readout {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .rvd-sg-readout :global(li[data-pass='false']) {
+    font-weight: 700;
+  }
+</style>
