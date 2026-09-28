@@ -17,7 +17,7 @@ const { email } = Astro.props;
   >
     <Button>
       {email}
-      {/* Label and icons share one grid cell, so the button never changes width. */}
+      {/* Icons overlay the label text, so the button never changes size. */}
       <span slot="sub" class="rvd-copy-email__label" data-rvd-copy-label data-state="idle">
         <span class="rvd-copy-email__text">Copy</span>
         <svg class="rvd-copy-email__icon" data-rvd-copy-icon="copied" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="m8 12.5 2.5 2.5L16 9.5" /></svg>
@@ -51,18 +51,18 @@ const { email } = Astro.props;
 
 <style>
   @layer components {
+    /* The text keeps its normal box (and baseline); icons overlay it, centered. */
     .rvd-copy-email__label {
-      display: inline-grid;
-      place-items: center;
-    }
-
-    .rvd-copy-email__label > * {
-      grid-area: 1 / 1;
+      position: relative;
     }
 
     .rvd-copy-email__icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
       width: 1.6em;
       height: 1.6em;
+      translate: -50% -50%;
       visibility: hidden;
     }
 

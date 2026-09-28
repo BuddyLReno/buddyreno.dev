@@ -35,6 +35,11 @@ const { appearance = 'primary', href, type = 'button' } = Astro.props;
       opacity: 0.9;
     }
 
+    /* The smaller sub label sits on the main label's baseline, not centered above it. */
+    .rvd-button:has(.rvd-button__sub)::part(button) {
+      align-items: baseline;
+    }
+
     .rvd-button__sub {
       opacity: 0.85;
     }
