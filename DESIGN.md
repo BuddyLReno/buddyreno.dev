@@ -37,7 +37,7 @@ every piece live at `/styleguide/` (`npm run dev`).
 | `layout/Section` (`tone`, `space`, `width`) | Every full-bleed band. Tones: `base`, `tint-1`, `tint-2`, `band`, `deep`. |
 | `layout/Container`, `layout/Stack` | Measure + gutter; vertical rhythm. |
 | `Heading` (`level`, `size`, `accent`) | All headings; `accent="."` gives the colored period. |
-| `LabelList` + `LabelRow` | Mono label + content rows (Now, Experience, post index). |
+| `LabelList` + `LabelRow` | Mono label + content rows (Now, Experience, post index). Unlabeled rows: `LabelList as="ul"` + `LabelRow` with no `label` (Favorite Reads). |
 | `LinkList` + `LinkCard` | Hover-tinted link rows (projects, featured posts). `LinkCard` renders an `<li>`: always inside `LinkList`. |
 | `Quote` | Testimonials. |
 | `Button` (`appearance="primary\|quiet"`, `sub` slot), `CopyEmail` | Actions. |

@@ -13,7 +13,20 @@ import StatusDot from '../components/StatusDot.astro';
 import Section from '../components/layout/Section.astro';
 import Stack from '../components/layout/Stack.astro';
 import me from '../assets/images/profile.jpg';
-import { email, experience, intro, now, projects, recommendationsUrl, social, testimonials, tools } from '../data/home';
+import {
+  email,
+  experience,
+  favoriteReads,
+  intro,
+  lastfm,
+  now,
+  projects,
+  recommendationsUrl,
+  showProjects,
+  social,
+  testimonials,
+  tools,
+} from '../data/home';
 ---
 <Base title="Buddy Reno" description="Buddy Reno is a senior software engineer building web products with Rails and a focus on the frontend.">
   <Section label="Intro">
@@ -43,21 +56,9 @@ import { email, experience, intro, now, projects, recommendationsUrl, social, te
     </Stack>
   </Section>
 
-  <Section id="work" label="Things I've made">
-    <Stack>
-      <Heading>Things I've made</Heading>
-      <LinkList>
-        {projects.map((p) => <LinkCard href={p.href} title={p.name} tags={p.tags} external>{p.blurb}</LinkCard>)}
-      </LinkList>
-    </Stack>
-  </Section>
 
-  <Section id="tools" tone="band" label="Tools">
-    <Stack>
-      <Heading>Tools</Heading>
-      <p class="type-body-lg">{tools}</p>
-    </Stack>
-  </Section>
+
+
 
   <Section id="experience" label="Experience">
     <Stack>
@@ -70,11 +71,50 @@ import { email, experience, intro, now, projects, recommendationsUrl, social, te
     </Stack>
   </Section>
 
-  <Section id="kind-words" tone="tint-2" label="Kind words">
+  <Section id="tools" tone="band" label="Tools">
+    <Stack>
+      <Heading>Tools</Heading>
+      <p class="type-body-lg">{tools}</p>
+    </Stack>
+  </Section>
+
+  <Section id="kind-words" label="Kind words">
     <Stack gap={28}>
       <Heading>Kind words</Heading>
       {testimonials.map((q) => <Quote name={q.name} role={q.role}>{q.text}</Quote>)}
       <p class="type-ui"><a href={recommendationsUrl} rel="external">Read more recommendations on LinkedIn ↗</a></p>
+    </Stack>
+  </Section>
+
+  {showProjects && (
+  <Section id="work" label="Things I've made">
+    <Stack>
+      <Heading>Things I've made</Heading>
+      <LinkList>
+        {projects.map((p) => <LinkCard href={p.href} title={p.name} tags={p.tags} external>{p.blurb}</LinkCard>)}
+      </LinkList>
+    </Stack>
+  </Section>
+  )}
+
+  <Section id="favorite-reads" tone="tint-2" label="Favorite Reads">
+    <Stack>
+      <Heading>Favorite Reads</Heading>
+      <LabelList as="ul">
+        {favoriteReads.map((book) => <LabelRow><strong>{book.title}</strong> <span class="text-muted">· {book.author}</span></LabelRow>)}
+      </LabelList>
+    </Stack>
+  </Section>
+
+  {/* Filled from Last.fm on load; stays hidden without JS or if the request fails. */}
+  <Section id="recent-listens" label="Recent Listens" hidden data-rvd-lastfm-user={lastfm.user} data-rvd-lastfm-key={lastfm.apiKey} data-rvd-lastfm-limit={lastfm.limit}>
+    <Stack>
+      <Heading>Recent Listens</Heading>
+      <div data-rvd-listens><LabelList /></div>
+      <template data-rvd-listen-row>
+        <LabelRow label=""><a data-rvd-listen-link rel="external"><strong data-rvd-listen-name></strong></a> <span class="text-muted">· <span data-rvd-listen-artist></span></span></LabelRow>
+      </template>
+      <p class="type-ui"><a href={`https://www.last.fm/user/${lastfm.user}`} rel="external">More on Last.fm ↗</a></p>
     </Stack>
   </Section>
 
@@ -95,5 +135,36 @@ import { email, experience, intro, now, projects, recommendationsUrl, social, te
   for (const el of document.querySelectorAll<HTMLElement>('[data-rvd-rotate]')) {
     const options: string[] = JSON.parse(el.dataset.rvdRotate ?? '[]');
     if (options.length) el.textContent = options[Math.floor(Math.random() * options.length)];
+  }
+</script>
+
+<script>
+  import { parseRecentTracks, recentTracksUrl, timeAgo } from '../lib/lastfm';
+
+  // Recent Listens: fetch on every load, reveal only when there's something to show.
+  const section = document.querySelector<HTMLElement>('[data-rvd-lastfm-user]');
+  const list = section?.querySelector('[data-rvd-listens] .rvd-label-list');
+  const template = section?.querySelector<HTMLTemplateElement>('template[data-rvd-listen-row]');
+  if (section && list && template) {
+    const { rvdLastfmUser: user = '', rvdLastfmKey: key = '', rvdLastfmLimit: limit = '10' } = section.dataset;
+    fetch(recentTracksUrl(user, key, Number(limit)), { signal: AbortSignal.timeout(8000) })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((json) => {
+        const tracks = parseRecentTracks(json, Number(limit));
+        if (!tracks.length) return;
+        list.replaceChildren(
+          ...tracks.map((track) => {
+            const row = template.content.cloneNode(true) as DocumentFragment;
+            const label = track.nowPlaying || !track.playedAt ? 'Now playing' : timeAgo(track.playedAt);
+            row.querySelector('dt')!.textContent = label;
+            row.querySelector<HTMLAnchorElement>('[data-rvd-listen-link]')!.href = track.url;
+            row.querySelector('[data-rvd-listen-name]')!.textContent = track.name;
+            row.querySelector('[data-rvd-listen-artist]')!.textContent = track.artist;
+            return row;
+          }),
+        );
+        section.hidden = false;
+      })
+      .catch(() => {});
   }
 </script>

@@ -31,6 +31,9 @@ export const now: NowRow[] = [
   { label: 'Learning', text: 'Hand brewing coffee' },
 ];
 
+// Hidden until there are work projects to write up.
+export const showProjects = false;
+
 export interface Project {
   name: string;
   blurb: string;
@@ -88,3 +91,29 @@ export const testimonials: Testimonial[] = [
     role: 'Software Engineer',
   },
 ];
+
+export interface Book {
+  title: string;
+  author: string;
+}
+
+// Lord of the Rings and The Hobbit lead; the rest are unranked.
+export const favoriteReads: Book[] = [
+  { title: 'The Lord of the Rings', author: 'J.R.R. Tolkien' },
+  { title: 'The Hobbit', author: 'J.R.R. Tolkien' },
+  { title: "Ender's Game", author: 'Orson Scott Card' },
+  { title: '1984', author: 'George Orwell' },
+  { title: 'Fahrenheit 451', author: 'Ray Bradbury' },
+  { title: 'Dark Matter', author: 'Blake Crouch' },
+  { title: 'The Martian', author: 'Andy Weir' },
+  { title: 'The Screwtape Letters', author: 'C.S. Lewis' },
+  { title: 'The Last Battle', author: 'C.S. Lewis' },
+  { title: 'Elder Race', author: 'Adrian Tchaikovsky' },
+];
+
+// Public, read-only Last.fm API key (it ships in the page); the shared secret is never needed.
+export const lastfm = {
+  user: 'BuddyLReno',
+  apiKey: '82770de360264ef7eaf056daefdd1cb8',
+  limit: 10,
+};

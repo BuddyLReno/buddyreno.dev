@@ -1,11 +1,13 @@
 ---
 interface Props {
   closed?: boolean;
+  /** `ul` for plain lists of unlabeled `LabelRow`s; `dl` (default) for labeled rows. */
+  as?: 'dl' | 'ul';
 }
 
-const { closed = true } = Astro.props;
+const { closed = true, as: Tag = 'dl' } = Astro.props;
 ---
-<dl class="rvd-label-list" data-rvd-closed={String(closed)}><slot /></dl>
+<Tag class="rvd-label-list" data-rvd-closed={String(closed)}><slot /></Tag>
 
 <style>
   @layer components {

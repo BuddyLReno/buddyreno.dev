@@ -32,6 +32,15 @@ test('LabelRow renders a dt/dd pair inside a LabelList dl', async () => {
   expect(list).toContain('data-rvd-closed="false"');
 });
 
+test('LabelList as="ul" with unlabeled rows renders a plain list', async () => {
+  const list = await render(LabelList, { props: { as: 'ul' } });
+  expect(list).toMatch(/<ul[^>]*class="rvd-label-list"/);
+  const row = await render(LabelRow, { slots: { default: 'Book title' } });
+  expect(row).toMatch(/<li[^>]*class="rvd-label-row"/);
+  expect(row).not.toContain('<dt');
+  expect(row).toContain('Book title');
+});
+
 test('Quote renders figure, blockquote, and attribution', async () => {
   const html = await render(Quote, {
     props: { name: 'Teammate Name', role: 'Staff Engineer, Company' },

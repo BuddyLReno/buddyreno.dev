@@ -1,14 +1,19 @@
 ---
 interface Props {
-  label: string;
+  /** Omit for an unlabeled row, which renders an `<li>` (use inside `LabelList as="ul"`). */
+  label?: string;
 }
 
 const { label } = Astro.props;
 ---
-<div class="rvd-label-row">
-  <dt class="rvd-label-row__label type-label">{label}</dt>
-  <dd class="rvd-label-row__content type-body-md"><slot /></dd>
-</div>
+{label === undefined ? (
+  <li class="rvd-label-row"><span class="rvd-label-row__content type-body-md"><slot /></span></li>
+) : (
+  <div class="rvd-label-row">
+    <dt class="rvd-label-row__label type-label">{label}</dt>
+    <dd class="rvd-label-row__content type-body-md"><slot /></dd>
+  </div>
+)}
 
 <style>
   @layer components {
