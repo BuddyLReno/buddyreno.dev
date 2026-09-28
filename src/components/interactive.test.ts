@@ -64,3 +64,11 @@ test('CopyEmail copies the address and relies on wa-copy-button announcements', 
   expect(html).not.toContain('aria-live');
   expect(html).toContain('hello@example.com');
 });
+
+test('CopyEmail swaps its label for a same-size circled icon instead of changing text', async () => {
+  const html = await render(CopyEmail, { props: { email: 'hello@example.com' } });
+  expect(html).toMatch(/data-rvd-copy-label[^>]*data-state="idle"/);
+  expect(html).toMatch(/<svg[^>]*data-rvd-copy-icon="copied"[^>]*aria-hidden="true"/);
+  expect(html).toMatch(/<svg[^>]*data-rvd-copy-icon="failed"[^>]*aria-hidden="true"/);
+  expect(html).not.toContain('Copied');
+});
