@@ -29,6 +29,7 @@ export const now: NowRow[] = [
   { label: 'Building', text: 'PageMark, reading plans with milestones and progress tracking.' },
   { label: 'Reading', text: ['This Inevitable Ruin', 'Between Two Fires', 'The Last Argument of Kings', 'The Dark Forest'] },
   { label: 'Learning', text: 'Hand brewing coffee' },
+  { label: 'Playing', text: 'Crimson Desert' },
 ];
 
 // Hidden until there are work projects to write up.
