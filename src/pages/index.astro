@@ -1,6 +1,99 @@
 ---
 import Base from '../layouts/Base.astro';
+import Avatar from '../components/Avatar.astro';
+import CopyEmail from '../components/CopyEmail.astro';
+import Heading from '../components/Heading.astro';
+import LabelList from '../components/LabelList.astro';
+import LabelRow from '../components/LabelRow.astro';
+import LinkCard from '../components/LinkCard.astro';
+import LinkList from '../components/LinkList.astro';
+import Quote from '../components/Quote.astro';
+import SocialLinks from '../components/SocialLinks.astro';
+import StatusDot from '../components/StatusDot.astro';
+import Section from '../components/layout/Section.astro';
+import Stack from '../components/layout/Stack.astro';
+import me from '../assets/images/me_bw_small.jpg';
+import { email, experience, intro, now, projects, recommendationsUrl, social, testimonials, tools } from '../data/home';
 ---
-<Base title="Buddy Reno" description="Personal site of Buddy Reno. New version in progress.">
-  <p>New site in progress. <a href="/styleguide/">Rivendell styleguide</a></p>
+<Base title="Buddy Reno" description="Buddy Reno is a senior software engineer building web products with Rails and a focus on the frontend.">
+  <Section label="Intro">
+    <Stack gap={22}>
+      <div class="flex items-center gap-4 sm:gap-6">
+        <Avatar src={me.src} label="Buddy Reno" />
+        <Heading level={1} size="hero" accent=".">Hi, I'm {intro.name}</Heading>
+      </div>
+      <Stack gap={14}>
+        {intro.bio.map((p, i) => <p class:list={['type-body-lg', { 'text-muted': i > 0 }]}>{p}</p>)}
+      </Stack>
+      {intro.availability && <StatusDot>{intro.availability}</StatusDot>}
+      <SocialLinks links={[...social, { label: 'Email', href: '#contact' }]} />
+    </Stack>
+  </Section>
+
+  <Section id="now" tone="tint-1" label="Now">
+    <Stack>
+      <Heading>Now</Heading>
+      <LabelList>
+        {now.map((row) => (
+          <LabelRow label={row.label}>
+            {Array.isArray(row.text) ? <span data-rvd-rotate={JSON.stringify(row.text)}>{row.text[0]}</span> : row.text}
+          </LabelRow>
+        ))}
+      </LabelList>
+    </Stack>
+  </Section>
+
+  <Section id="work" label="Things I've made">
+    <Stack>
+      <Heading>Things I've made</Heading>
+      <LinkList>
+        {projects.map((p) => <LinkCard href={p.href} title={p.name} tags={p.tags} external>{p.blurb}</LinkCard>)}
+      </LinkList>
+    </Stack>
+  </Section>
+
+  <Section id="tools" tone="band" label="Tools">
+    <Stack>
+      <Heading>Tools</Heading>
+      <p class="type-body-lg">{tools}</p>
+    </Stack>
+  </Section>
+
+  <Section id="experience" label="Experience">
+    <Stack>
+      <Heading>Experience</Heading>
+      <LabelList closed={false}>
+        {experience.map((job) => (
+          <LabelRow label={job.when}><strong>{job.role}</strong> <span class="text-muted">· {job.company}</span></LabelRow>
+        ))}
+      </LabelList>
+    </Stack>
+  </Section>
+
+  <Section id="kind-words" tone="tint-2" label="Kind words">
+    <Stack gap={28}>
+      <Heading>Kind words</Heading>
+      {testimonials.map((q) => <Quote name={q.name} role={q.role}>{q.text}</Quote>)}
+      <p class="type-ui"><a href={recommendationsUrl} rel="external">Read more recommendations on LinkedIn ↗</a></p>
+    </Stack>
+  </Section>
+
+  <Section id="contact" tone="deep" label="Contact">
+    <Stack gap={20}>
+      <Heading size="xl" accent=".">Say hello</Heading>
+      <p class="type-body-lg text-muted">Working on something interesting? I'd like to hear about it.</p>
+      <div class="flex flex-wrap items-center gap-x-5 gap-y-3">
+        <CopyEmail email={email} />
+        <SocialLinks links={social} />
+      </div>
+    </Stack>
+  </Section>
 </Base>
+
+<script>
+  // Swap each rotating Now row to a random option; the first option is the no-JS fallback.
+  for (const el of document.querySelectorAll<HTMLElement>('[data-rvd-rotate]')) {
+    const options: string[] = JSON.parse(el.dataset.rvdRotate ?? '[]');
+    if (options.length) el.textContent = options[Math.floor(Math.random() * options.length)];
+  }
+</script>

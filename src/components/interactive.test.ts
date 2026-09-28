@@ -21,6 +21,17 @@ test('LinkCard renders title, blurb, tags, and an arrow only when external', asy
   expect(internal).not.toContain('rel="external"');
 });
 
+test('LinkCard without href renders a non-link card with no arrow', async () => {
+  const html = await render(LinkCard, {
+    props: { title: 'Private project', tags: ['Rails'], external: true },
+    slots: { default: 'Coming soon.' },
+  });
+  expect(html).toMatch(/<li[\s\S]*<div[^>]*class="rvd-link-card"/);
+  expect(html).not.toContain('<a');
+  expect(html).not.toContain('↗');
+  expect(html).toContain('Coming soon.');
+});
+
 test('LinkList is a list', async () => {
   const html = await render(LinkList);
   expect(html).toMatch(/<ul[^>]*class="rvd-link-list"/);

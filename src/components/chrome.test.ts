@@ -37,8 +37,8 @@ test('SiteFooter is a deep band with default and overridable slots', async () =>
   const fallback = await render(SiteFooter);
   expect(fallback).toMatch(/<footer[^>]*data-rvd-tone="deep"/);
   expect(fallback).toContain(`© ${year} Buddy Reno`);
-  expect(fallback).toContain('Nashville, TN');
+  expect(fallback).toContain('Spring Hill, TN');
   const custom = await render(SiteFooter, { slots: { end: 'Somewhere else' } });
   expect(custom).toContain('Somewhere else');
-  expect(custom).not.toContain('Nashville, TN');
+  expect(custom).not.toContain('Spring Hill, TN');
 });

@@ -18,6 +18,22 @@ test('Base renders head essentials and themed html root', async () => {
   expect(html).not.toContain('noindex');
 });
 
+test('Base renders favicons and Open Graph / Twitter card tags', async () => {
+  const html = await render(Base, {
+    props: { title: 'Share me', description: 'A shareable page' },
+    request: new Request('https://buddyreno.dev/some/page/'),
+  });
+  expect(html).toContain('<link rel="icon" href="/favicon.svg" type="image/svg+xml">');
+  expect(html).toContain('<link rel="apple-touch-icon" href="/apple-touch-icon.png">');
+  expect(html).toContain('<meta property="og:type" content="website">');
+  expect(html).toContain('<meta property="og:site_name" content="Buddy Reno">');
+  expect(html).toContain('<meta property="og:title" content="Share me">');
+  expect(html).toContain('<meta property="og:description" content="A shareable page">');
+  expect(html).toContain('<meta property="og:url" content="https://buddyreno.dev/some/page/">');
+  expect(html).toContain('<meta property="og:image" content="https://buddyreno.dev/og.png">');
+  expect(html).toContain('<meta name="twitter:card" content="summary_large_image">');
+});
+
 test('Base can mark a page noindex', async () => {
   const html = await render(Base, { props: { title: 'Hidden', noindex: true } });
   expect(html).toContain('<meta name="robots" content="noindex">');

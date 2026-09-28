@@ -2,22 +2,25 @@
 import TagList from './TagList.astro';
 
 interface Props {
-  href: string;
+  href?: string;
   title: string;
   tags?: string[];
   external?: boolean;
 }
 
 const { href, title, tags = [], external = false } = Astro.props;
+// No href (e.g. a private project): render the same card, but not as a link.
+const Tag = href ? 'a' : 'div';
+const arrow = external && href;
 ---
 <li>
-  <a class="rvd-link-card" href={href} rel={external ? 'external' : undefined}>
+  <Tag class="rvd-link-card" href={href} rel={arrow ? 'external' : undefined}>
     <span class="rvd-link-card__body">
-      <span class="rvd-link-card__title">{title}{external && <span class="rvd-link-card__arrow" aria-hidden="true"> ↗</span>}</span>
+      <span class="rvd-link-card__title">{title}{arrow && <span class="rvd-link-card__arrow" aria-hidden="true"> ↗</span>}</span>
       {Astro.slots.has('default') && <span class="rvd-link-card__blurb type-body-sm"><slot /></span>}
     </span>
     <TagList tags={tags} />
-  </a>
+  </Tag>
 </li>
 
 <style>
@@ -33,7 +36,7 @@ const { href, title, tags = [], external = false } = Astro.props;
       transition: background-color var(--rvd-dur-fast);
     }
 
-    .rvd-link-card:hover {
+    a.rvd-link-card:hover {
       background-color: var(--rvd-hover);
       color: var(--rvd-ink);
     }
