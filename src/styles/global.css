@@ -1,9 +1,10 @@
 @import 'tailwindcss';
 @import './tokens.css';
-@import './themes/teal-amber.css';
-@import './themes/teal.css';
-@import './themes/cobalt-teal.css';
-@import './themes/violet-cobalt.css';
+@import './themes/rivendell.css';
+@import './themes/mordor.css';
+@import './themes/the-shire.css';
+@import './themes/grey-havens.css';
+@import './themes/evenstar.css';
 @import './tones.css';
 @import './base.css';
 @import './code.css';

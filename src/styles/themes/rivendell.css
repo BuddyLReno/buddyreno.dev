@@ -1,0 +1,5 @@
+/* Theme: Rivendell. Waterfall teal, autumn amber (default). Sets color inputs only. */
+:root[data-rvd-theme='rivendell'] {
+  --rvd-hue-1: 200;
+  --rvd-hue-2: 70;
+}

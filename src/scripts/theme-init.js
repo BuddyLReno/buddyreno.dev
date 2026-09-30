@@ -1,7 +1,7 @@
 // Rivendell theme runtime. ThemeScript.astro inlines this file (blocking, in <head>)
 // so data-rvd-mode and data-rvd-theme are set before first paint. Keep it dependency-free.
 (() => {
-  const THEMES = ['teal-amber', 'teal', 'cobalt-teal', 'violet-cobalt'];
+  const THEMES = ['rivendell', 'mordor', 'the-shire', 'grey-havens', 'evenstar'];
   const MODES = ['light', 'dark', 'system'];
   const root = document.documentElement;
   const system = window.matchMedia('(prefers-color-scheme: dark)');

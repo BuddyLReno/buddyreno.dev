@@ -1,0 +1,8 @@
+/* Theme: Mordor. Fire red-orange, flame orange; stronger color and bands. Sets color inputs only. */
+:root[data-rvd-theme='mordor'] {
+  --rvd-hue-1: 40;
+  --rvd-hue-2: 60;
+  --rvd-accent-c: 0.17;
+  --rvd-band-boost: 1.7;
+  --rvd-tint-hue-shift: 20;
+}

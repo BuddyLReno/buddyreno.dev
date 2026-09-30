@@ -67,7 +67,7 @@ test('global.css imports every stylesheet, tokens before themes before tones', (
   expect(firstTheme).toBeLessThan(imports.indexOf('tones.css'));
 });
 
-const THEME_INPUTS = new Set(['--rvd-hue-1', '--rvd-hue-2', '--rvd-accent-c']);
+const THEME_INPUTS = new Set(['--rvd-hue-1', '--rvd-hue-2', '--rvd-accent-c', '--rvd-band-boost', '--rvd-tint-hue-shift']);
 const runtimeThemes = (): string[] => {
   const match = themeInit.match(/const THEMES = (\[[^\]]*\])/);
   if (!match) throw new Error('THEMES list not found in theme-init.js');

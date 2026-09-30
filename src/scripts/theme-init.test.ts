@@ -36,10 +36,10 @@ beforeEach(() => {
 
 afterEach(() => vi.restoreAllMocks());
 
-test('defaults to system mode and the teal-amber theme', () => {
+test('defaults to system mode and the rivendell theme', () => {
   boot();
   expect(root.dataset.rvdMode).toBe('light');
-  expect(root.dataset.rvdTheme).toBe('teal-amber');
+  expect(root.dataset.rvdTheme).toBe('rivendell');
   expect(root.classList.contains('wa-light')).toBe(true);
   expect(window.rvd.getMode()).toBe('system');
 });
@@ -72,9 +72,9 @@ test('a stored explicit mode wins over the OS and ignores OS changes', () => {
 });
 
 test('unknown stored values fall back to defaults', () => {
-  boot({ 'rvd-mode': 'purple', 'rvd-theme': 'mordor' });
+  boot({ 'rvd-mode': 'purple', 'rvd-theme': 'isengard' });
   expect(window.rvd.getMode()).toBe('system');
-  expect(root.dataset.rvdTheme).toBe('teal-amber');
+  expect(root.dataset.rvdTheme).toBe('rivendell');
 });
 
 test('setMode and setTheme apply, persist, and announce', () => {
@@ -82,22 +82,22 @@ test('setMode and setTheme apply, persist, and announce', () => {
   const onChange = vi.fn();
   document.addEventListener('rvd:change', onChange);
   window.rvd.setMode('dark');
-  window.rvd.setTheme('cobalt-teal');
+  window.rvd.setTheme('grey-havens');
   expect(root.dataset.rvdMode).toBe('dark');
-  expect(root.dataset.rvdTheme).toBe('cobalt-teal');
+  expect(root.dataset.rvdTheme).toBe('grey-havens');
   expect(localStorage.getItem('rvd-mode')).toBe('dark');
-  expect(localStorage.getItem('rvd-theme')).toBe('cobalt-teal');
+  expect(localStorage.getItem('rvd-theme')).toBe('grey-havens');
   expect(onChange).toHaveBeenCalledTimes(2);
-  expect(onChange.mock.calls[1][0].detail).toEqual({ mode: 'dark', theme: 'cobalt-teal', resolvedMode: 'dark' });
+  expect(onChange.mock.calls[1][0].detail).toEqual({ mode: 'dark', theme: 'grey-havens', resolvedMode: 'dark' });
   document.removeEventListener('rvd:change', onChange);
 });
 
 test('invalid setMode/setTheme values are ignored', () => {
   boot();
   window.rvd.setMode('sepia' as RvdMode);
-  window.rvd.setTheme('mordor');
+  window.rvd.setTheme('isengard');
   expect(window.rvd.getMode()).toBe('system');
-  expect(window.rvd.getTheme()).toBe('teal-amber');
+  expect(window.rvd.getTheme()).toBe('rivendell');
 });
 
 test('storage throws: boots with defaults and toggles still work for the session', () => {
@@ -108,9 +108,9 @@ test('storage throws: boots with defaults and toggles still work for the session
     throw new Error('denied');
   });
   boot();
-  expect(root.dataset.rvdTheme).toBe('teal-amber');
+  expect(root.dataset.rvdTheme).toBe('rivendell');
   window.rvd.setMode('dark');
   expect(root.dataset.rvdMode).toBe('dark');
-  window.rvd.setTheme('teal');
-  expect(root.dataset.rvdTheme).toBe('teal');
+  window.rvd.setTheme('the-shire');
+  expect(root.dataset.rvdTheme).toBe('the-shire');
 });

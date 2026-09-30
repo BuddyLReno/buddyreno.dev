@@ -1,10 +1,13 @@
 ---
 import ModeIcon from './ModeIcon.astro';
+import themeInit from '../scripts/theme-init.js?raw';
 import ThemeToggle from './ThemeToggle.astro';
 
 // Hues come straight from the theme files, so swatches can't drift from the real palettes.
 const files = import.meta.glob<string>('../styles/themes/*.css', { query: '?raw', import: 'default', eager: true });
 const input = (css: string, name: string) => css.match(new RegExp(`--rvd-${name}:\\s*([^;]+);`))?.[1];
+// Menu order is the runtime THEMES order (default first).
+const order = themeInit.match(/const THEMES = \[([^\]]*)\]/)![1].match(/[\w-]+/g)!;
 const themes = Object.entries(files)
   .map(([path, css]) => {
     const slug = path.split('/').pop()!.replace(/\.css$/, '');
@@ -15,7 +18,7 @@ const themes = Object.entries(files)
       style: vars.filter(([, v]) => v).map(([k, v]) => `--sw-${k}: ${v}`).join('; '),
     };
   })
-  .sort((a, b) => (a.slug === 'teal-amber' ? -1 : b.slug === 'teal-amber' ? 1 : a.slug.localeCompare(b.slug)));
+  .sort((a, b) => order.indexOf(a.slug) - order.indexOf(b.slug));
 const id = `rvd-appearance-${Math.random().toString(36).slice(2, 8)}`;
 ---
 <div class="rvd-appearance" data-rvd-appearance>

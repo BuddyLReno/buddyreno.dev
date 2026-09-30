@@ -9,8 +9,10 @@ every piece live at `/styleguide/` (`npm run dev`).
 - Astro 7 + Tailwind CSS v4 + Web Awesome 3 (free, npm, cherry-picked in `src/scripts/webawesome.ts`).
 - **Prefix:** CSS variables `--rvd-*`, attributes `data-rvd-*`, classes `.rvd-*`, storage `rvd-*`.
 - **Themes** are named color palettes (`data-rvd-theme` on `<html>`, one file each in `src/styles/themes/`).
-  They set only `--rvd-hue-1`, `--rvd-hue-2` and `--rvd-accent-c`. Current names are working names until LOTR
-  names are picked. To add or rename a theme, change the file in `src/styles/themes/` and the `THEMES` list
+  They set only `--rvd-hue-1`, `--rvd-hue-2` and `--rvd-accent-c`, plus two optional tuning inputs:
+  `--rvd-band-boost` (multiplies band chroma; default 1) and `--rvd-tint-hue-shift` (degrees; pale reds read
+  pink, so Mordor nudges its tint toward yellow). Names are Lord of the Rings places and things
+  (Rivendell is the default). To add or rename a theme, change the file in `src/styles/themes/` and the `THEMES` list
   in `src/scripts/theme-init.js`. Adding one takes three edits: the file, an `@import` in `global.css`, and
   the `THEMES` entry; a test catches each omission. `AppearanceMenu` (names and swatches) picks up theme
   files automatically.

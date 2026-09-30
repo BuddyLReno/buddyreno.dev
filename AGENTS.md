@@ -79,7 +79,8 @@ These fail the suite if broken; don't weaken the tests to get green.
 - The same applies to Web Awesome composites that reference a `--wa-*` we override (e.g. `--wa-focus-ring`).
 - Every `--wa-*` override lives in `src/styles/webawesome-theme.css` and must exist in the installed Web Awesome.
 - Theme files in `src/styles/themes/` must match `THEMES` in `src/scripts/theme-init.js` and be imported
-  in `global.css`. Themes set only `--rvd-hue-1`, `--rvd-hue-2`, `--rvd-accent-c`.
+  in `global.css`. Themes set only `--rvd-hue-1`, `--rvd-hue-2`, `--rvd-accent-c`,
+  and optionally `--rvd-band-boost` / `--rvd-tint-hue-shift` (numbers, never `var()`).
 - Every component `<style>` block starts with `@layer components` (so Tailwind utilities passed via `class`
   win), and custom properties in `src/styles/` stay outside `@layer components` (tone overrides must beat
   the unlayered token block).
