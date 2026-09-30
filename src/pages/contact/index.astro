@@ -1,0 +1,114 @@
+---
+import Base from '../../layouts/Base.astro';
+import Button from '../../components/Button.astro';
+import ChoicePills from '../../components/ChoicePills.astro';
+import Heading from '../../components/Heading.astro';
+import SocialLinks from '../../components/SocialLinks.astro';
+import TextField from '../../components/TextField.astro';
+import Section from '../../components/layout/Section.astro';
+import Stack from '../../components/layout/Stack.astro';
+import { contact } from '../../data/contact';
+import { social } from '../../data/home';
+
+const defaultHint = contact.reasons.find((r) => r.value === contact.defaultReason)?.hint;
+---
+<Base title="Contact · Buddy Reno" description="Get in touch with Buddy Reno.">
+  <Section space="lg" label="Contact">
+    <Stack gap={28}>
+      <Stack gap={16}>
+        <Heading level={1} size="hero" accent=".">Say hello</Heading>
+        <p class="type-body-lg text-muted">{contact.lede}</p>
+      </Stack>
+
+      <form
+        class="rvd-contact-form"
+        action="/api/contact"
+        method="post"
+        data-rvd-contact-form
+        data-errors={JSON.stringify(contact.errors)}
+        data-min-length={contact.messageMinLength}
+        data-sending={contact.sending}
+      >
+        {/* Honeypot: hidden from people, tempting to bots. The Worker drops anything that fills it. */}
+        <p hidden><label>Leave this empty: <input name="website" tabindex="-1" autocomplete="off" /></label></p>
+        <Stack gap={20}>
+          <ChoicePills legend={contact.reasonLegend} name="reason" options={contact.reasons} value={contact.defaultReason} />
+          <div class="grid gap-5 sm:grid-cols-2">
+            <TextField label="Your name" name="name" autocomplete="name" required />
+            <TextField label="Email" name="email" type="email" autocomplete="email" required />
+          </div>
+          <TextField label="Company" name="company" autocomplete="organization" optional />
+          <TextField label="Message" name="message" rows={6} minlength={contact.messageMinLength} placeholder={defaultHint} required />
+          <p class="rvd-contact-form__error type-body-sm" role="alert" data-rvd-contact-error hidden></p>
+          <div class="flex flex-wrap items-center gap-x-5 gap-y-3">
+            <Button type="submit">{contact.submit}</Button>
+            <span class="type-body-sm text-muted">{contact.note}</span>
+          </div>
+        </Stack>
+      </form>
+
+      <SocialLinks links={social} label="Or find me at" />
+    </Stack>
+  </Section>
+</Base>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-rvd-contact-form]');
+  if (form) {
+    // Friendly checks instead of the browser's bubbles; the Worker re-validates everything.
+    form.noValidate = true;
+    const errors: Record<'name' | 'email' | 'message', string> = JSON.parse(form.dataset.errors ?? '{}');
+    const minLength = Number(form.dataset.minLength) || 1;
+    const errorBox = form.querySelector<HTMLElement>('[data-rvd-contact-error]')!;
+    const field = (name: string) => form.elements.namedItem(name) as HTMLInputElement | HTMLTextAreaElement;
+    const submit = form.querySelector<HTMLElement & { disabled: boolean }>('[type="submit"]');
+    const submitLabel = submit?.textContent ?? '';
+
+    // Each reason swaps in its own message hint.
+    form.addEventListener('change', (event) => {
+      const input = event.target as HTMLInputElement;
+      if (input.name === 'reason' && input.dataset.hint) field('message').placeholder = input.dataset.hint;
+    });
+
+    form.addEventListener('submit', (event) => {
+      const problem = !field('name').value.trim()
+        ? (['name', errors.name] as const)
+        : !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field('email').value.trim())
+          ? (['email', errors.email] as const)
+          : field('message').value.trim().length < minLength
+            ? (['message', errors.message] as const)
+            : null;
+      if (problem) {
+        event.preventDefault();
+        errorBox.textContent = problem[1];
+        errorBox.hidden = false;
+        field(problem[0]).focus();
+        return;
+      }
+      errorBox.hidden = true;
+      if (submit) {
+        submit.disabled = true;
+        submit.textContent = form.dataset.sending ?? submitLabel;
+      }
+    });
+
+    // Coming back via the back button restores the form; re-enable the button.
+    window.addEventListener('pageshow', () => {
+      if (submit) {
+        submit.disabled = false;
+        submit.textContent = submitLabel;
+      }
+    });
+  }
+</script>
+
+<style>
+  @layer components {
+    .rvd-contact-form__error {
+      padding: 10px 14px;
+      border-left: 3px solid var(--rvd-accent);
+      background-color: var(--rvd-surface);
+      color: var(--rvd-ink);
+    }
+  }
+</style>

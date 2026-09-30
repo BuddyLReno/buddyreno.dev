@@ -1,0 +1,63 @@
+---
+interface Props {
+  label: string;
+  name: string;
+  type?: 'text' | 'email';
+  /** Set to render a textarea with this many rows. */
+  rows?: number;
+  required?: boolean;
+  /** Adds "(optional)" to the label. */
+  optional?: boolean;
+  autocomplete?: string;
+  placeholder?: string;
+  minlength?: number;
+}
+
+const { label, name, type = 'text', rows, required, optional, autocomplete, placeholder, minlength } = Astro.props;
+const id = `rvd-field-${name}`;
+---
+<div class="rvd-field">
+  <label class="rvd-field__label type-ui" for={id}>
+    {label}
+    {optional && <span class="rvd-field__note"> (optional)</span>}
+  </label>
+  {rows ? (
+    <textarea class="rvd-field__control type-body-md" id={id} name={name} rows={rows} minlength={minlength} required={required} placeholder={placeholder} />
+  ) : (
+    <input class="rvd-field__control type-body-md" id={id} name={name} type={type} autocomplete={autocomplete} minlength={minlength} required={required} placeholder={placeholder} />
+  )}
+</div>
+
+<style>
+  @layer components {
+    .rvd-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    .rvd-field__note {
+      color: var(--rvd-muted);
+      font-weight: 400;
+    }
+
+    .rvd-field__control {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--rvd-control-line);
+      border-radius: var(--rvd-radius-md);
+      background-color: var(--rvd-bg);
+      color: var(--rvd-ink);
+    }
+
+    .rvd-field__control::placeholder {
+      color: var(--rvd-muted);
+      opacity: 1;
+    }
+
+    textarea.rvd-field__control {
+      resize: vertical;
+    }
+  }
+</style>

@@ -1,0 +1,16 @@
+---
+import Base from '../../layouts/Base.astro';
+import Heading from '../../components/Heading.astro';
+import Section from '../../components/layout/Section.astro';
+import Stack from '../../components/layout/Stack.astro';
+import { contact } from '../../data/contact';
+---
+<Base title="Thanks · Buddy Reno" noindex>
+  <Section space="lg" label="Thanks">
+    <Stack gap={16}>
+      <Heading level={1} size="hero" accent=".">{contact.thanks.title}</Heading>
+      <p class="type-body-lg">{contact.thanks.body}</p>
+      <p class="type-ui"><a href="/">← Back home</a></p>
+    </Stack>
+  </Section>
+</Base>

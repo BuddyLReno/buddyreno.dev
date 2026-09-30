@@ -2,6 +2,8 @@
 import { getEntry, render } from 'astro:content';
 import Avatar from '../components/Avatar.astro';
 import Button from '../components/Button.astro';
+import ChoicePills from '../components/ChoicePills.astro';
+import TextField from '../components/TextField.astro';
 import CopyEmail from '../components/CopyEmail.astro';
 import SiteHeader from '../components/layout/SiteHeader.astro';
 import Heading from '../components/Heading.astro';
@@ -206,6 +208,14 @@ const radii = ['--rvd-radius-sm', '--rvd-radius-md', '--rvd-radius-lg', '--rvd-r
 
       <Example title="CopyEmail" props="email" code={`<CopyEmail email="hello@example.com" />`}>
         <CopyEmail email={email} />
+      </Example>
+
+      <Example title="TextField + ChoicePills" props="TextField label · name · type? · rows? · required? · optional? · ChoicePills legend · name · options · value?" code={`<ChoicePills legend="What's this about?" name="reason" options={[{ value: 'hi', label: 'Just saying hi' }]} />\n<TextField label="Company" name="company" optional />`}>
+        <Stack gap={16}>
+          <ChoicePills legend="What's this about?" name="sg-reason" options={[{ value: 'a', label: 'Work together' }, { value: 'b', label: 'Talk shop' }]} />
+          <TextField label="Company" name="sg-company" optional />
+          <TextField label="Message" name="sg-message" rows={3} placeholder="Placeholder text" />
+        </Stack>
       </Example>
 
       <Example title="ThemeToggle" props="label?" code={`<ThemeToggle />`}>

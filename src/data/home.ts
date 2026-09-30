@@ -12,7 +12,6 @@ export const intro = {
   availability: '',
 };
 
-export const email = 'hello@example.com';
 
 export const social: SocialLink[] = [
   { label: 'GitHub', href: 'https://github.com/BuddyLReno' },

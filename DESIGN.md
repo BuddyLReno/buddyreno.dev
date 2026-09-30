@@ -41,6 +41,7 @@ every piece live at `/styleguide/` (`npm run dev`).
 | `LinkList` + `LinkCard` | Hover-tinted link rows (projects, featured posts). `LinkCard` renders an `<li>`: always inside `LinkList`. |
 | `Quote` | Testimonials. |
 | `Button` (`appearance="primary\|quiet"`, `sub` slot), `CopyEmail` | Actions. |
+| `TextField` (`rows` for a textarea, `optional`), `ChoicePills` | Forms (Contact). Native inputs; borders use `--rvd-control-line` (3:1). |
 | `StatusDot`, `SocialLinks`, `TagList`, `Wordmark`, `ThemeToggle` | As named. |
 | `Avatar` (`src`, `label`) | Takes a string: `import me from '../assets/images/me_bw.jpg'`, then `src={me.src}`. Not optimized (`wa-avatar` bypasses `astro:assets`). |
 | `Prose`, `PostMeta`, `PostList`, `ProjectHeader` | Long-form. |

@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Avatar from '../components/Avatar.astro';
-import CopyEmail from '../components/CopyEmail.astro';
+import Button from '../components/Button.astro';
 import Heading from '../components/Heading.astro';
 import LabelList from '../components/LabelList.astro';
 import LabelRow from '../components/LabelRow.astro';
@@ -14,7 +14,6 @@ import Section from '../components/layout/Section.astro';
 import Stack from '../components/layout/Stack.astro';
 import me from '../assets/images/profile.jpg';
 import {
-  email,
   experience,
   favoriteReads,
   intro,
@@ -39,7 +38,7 @@ import {
         {intro.bio.map((p, i) => <p class:list={['type-body-lg', { 'text-muted': i > 0 }]}>{p}</p>)}
       </Stack>
       {intro.availability && <StatusDot>{intro.availability}</StatusDot>}
-      <SocialLinks links={[...social, { label: 'Email', href: '#contact' }]} />
+      <SocialLinks links={[...social, { label: 'Contact', href: '/contact/' }]} />
     </Stack>
   </Section>
 
@@ -123,7 +122,7 @@ import {
       <Heading size="xl" accent=".">Say hello</Heading>
       <p class="type-body-lg text-muted">Working on something interesting? I'd like to hear about it.</p>
       <div class="flex flex-wrap items-center gap-x-5 gap-y-3">
-        <CopyEmail email={email} />
+        <Button href="/contact/">Get in touch →</Button>
         <SocialLinks links={social} />
       </div>
     </Stack>

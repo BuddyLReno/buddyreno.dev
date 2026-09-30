@@ -1,0 +1,86 @@
+---
+export interface Choice {
+  value: string;
+  label: string;
+  /** Free-form text for scripts (e.g. a matching placeholder), exposed as data-hint. */
+  hint?: string;
+}
+
+interface Props {
+  legend: string;
+  name: string;
+  options: Choice[];
+  value?: string;
+}
+
+const { legend, name, options, value = options[0]?.value } = Astro.props;
+---
+<fieldset class="rvd-choice-pills">
+  <legend class="rvd-choice-pills__legend type-ui">{legend}</legend>
+  <div class="rvd-choice-pills__options">
+    {options.map((option) => (
+      <label class="rvd-choice-pills__pill type-body-sm">
+        <input class="rvd-choice-pills__input" type="radio" name={name} value={option.value} checked={option.value === value} data-hint={option.hint} />
+        <span>{option.label}</span>
+      </label>
+    ))}
+  </div>
+</fieldset>
+
+<style>
+  @layer components {
+    .rvd-choice-pills {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-width: 0;
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+
+    .rvd-choice-pills__legend {
+      margin-bottom: 8px;
+      padding: 0;
+    }
+
+    .rvd-choice-pills__options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .rvd-choice-pills__pill {
+      position: relative;
+      padding: 7px 14px;
+      border: 1px solid var(--rvd-control-line);
+      border-radius: var(--rvd-radius-full);
+      color: var(--rvd-muted);
+      cursor: pointer;
+    }
+
+    /* The native radio stays in the tree (keyboard, forms, screen readers), just invisible. */
+    .rvd-choice-pills__input {
+      position: absolute;
+      inset: 0;
+      margin: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .rvd-choice-pills__pill:hover {
+      color: var(--rvd-ink);
+    }
+
+    .rvd-choice-pills__pill:has(:checked) {
+      border-color: var(--rvd-accent);
+      background-color: var(--rvd-selected);
+      color: var(--rvd-ink);
+    }
+
+    .rvd-choice-pills__pill:has(:focus-visible) {
+      outline: 2px solid var(--rvd-accent);
+      outline-offset: 2px;
+    }
+  }
+</style>
