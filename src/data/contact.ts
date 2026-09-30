@@ -1,6 +1,6 @@
 import type { Choice } from '../components/ChoicePills.astro';
 
-// Contact page copy. PLACEHOLDER: all wording is a first draft for Buddy to edit.
+// Contact page copy (also read by the Worker: reasons and messageMinLength).
 export const contact = {
   lede: "Got a question, an idea, or something you're building? Send a note and I'll get back to you.",
   reasonLegend: "What's this about?",

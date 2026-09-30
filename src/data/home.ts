@@ -1,6 +1,6 @@
 import type { SocialLink } from '../components/types';
 
-// Homepage content. Anything marked PLACEHOLDER is made-up copy awaiting real content.
+// Homepage content. Edit here, not in src/pages/index.astro.
 
 export const intro = {
   name: 'Buddy',

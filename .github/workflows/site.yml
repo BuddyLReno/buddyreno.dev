@@ -3,8 +3,8 @@ name: Site
 on:
   push:
   pull_request:
-  # Deploys are manual until the real homepage ships. Pages currently serves the
-  # gh-pages branch; switch Settings → Pages → Source to "GitHub Actions" before the first deploy.
+  # Deploys are manual: Actions → Site → Run workflow with "deploy" checked
+  # (or `gh workflow run site.yml -f deploy=true`). Pages source is "GitHub Actions".
   workflow_dispatch:
     inputs:
       deploy:
