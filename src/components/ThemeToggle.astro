@@ -1,9 +1,18 @@
 ---
+import ModeIcon from './ModeIcon.astro';
+
 interface Props {
   label?: string;
 }
 
 const { label = 'Color mode' } = Astro.props;
+const modes: [RvdMode, string][] = [
+  ['light', 'Light'],
+  ['dark', 'Dark'],
+  ['system', 'System'],
+];
+// ponytail: random ids so tooltips pair with their radio when several toggles share a page.
+const id = `rvd-mode-${Math.random().toString(36).slice(2, 8)}`;
 ---
 <wa-radio-group
   class="rvd-theme-toggle"
@@ -13,10 +22,14 @@ const { label = 'Color mode' } = Astro.props;
   value="system"
   data-rvd-theme-toggle
 >
-  <wa-radio appearance="button" value="light">Light</wa-radio>
-  <wa-radio appearance="button" value="dark">Dark</wa-radio>
-  <wa-radio appearance="button" value="system">System</wa-radio>
+  {modes.map(([value, name]) => (
+    <wa-radio id={`${id}-${value}`} appearance="button" value={value}>
+      <ModeIcon mode={value} />
+      <span class="sr-only">{name}</span>
+    </wa-radio>
+  ))}
 </wa-radio-group>
+{modes.map(([value, name]) => <wa-tooltip for={`${id}-${value}`}>{name}</wa-tooltip>)}
 
 <script>
   type RadioGroup = HTMLElement & { value: string | null };
@@ -52,15 +65,16 @@ const { label = 'Color mode' } = Astro.props;
     }
 
     /* Tailwind's preflight zeroes padding on every element, which beats WA's
-       :host padding, so the segment padding (v3: 5px 9px) is set here. */
+       :host padding, so the segment padding is set here. */
     .rvd-theme-toggle wa-radio {
       margin: 0;
-      padding: 5px 9px;
+      padding: 5px 7px;
       border-radius: var(--rvd-radius-sm);
       color: var(--rvd-muted);
-      font-family: var(--rvd-font-mono);
-      font-size: var(--rvd-text-label-sm);
-      text-transform: uppercase;
+    }
+
+    .rvd-theme-toggle wa-radio svg {
+      display: block;
     }
 
     .rvd-theme-toggle wa-radio:state(checked) {

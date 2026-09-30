@@ -14,16 +14,16 @@ test('styleguide is noindex and has one contrast scope per tone', async () => {
   }
 });
 
-test('the sticky toolbar carries the mode toggle and theme select', async () => {
+test('the sticky toolbar carries the appearance menu', async () => {
   const html = await render(Styleguide);
   const toolbar = html.match(/<nav[^>]*class="rvd-sg-toolbar"[\s\S]*?<\/nav>/)?.[0] ?? '';
-  expect(toolbar).toContain('data-rvd-theme-toggle');
-  expect(toolbar).toContain('data-rvd-theme-select');
+  expect(toolbar).toContain('data-rvd-appearance');
+  expect(toolbar).toContain('data-rvd-palette');
 });
 
 test('the styleguide header has no toggle (the toolbar has it)', async () => {
   const html = await render(Styleguide);
   const header = html.match(/<header[^>]*class="rvd-site-header"[\s\S]*?<\/header>/)?.[0] ?? '';
   expect(header).toContain('rvd-wordmark');
-  expect(header).not.toContain('data-rvd-theme-toggle');
+  expect(header).not.toContain('data-rvd-appearance');
 });

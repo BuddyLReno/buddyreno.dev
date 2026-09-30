@@ -1,10 +1,10 @@
 ---
-import ThemeToggle from '../ThemeToggle.astro';
+import AppearanceMenu from '../AppearanceMenu.astro';
 import Wordmark from '../Wordmark.astro';
 import Container from './Container.astro';
 
 interface Props {
-  /** Show the Light/Dark/System toggle. Off where a page provides its own (e.g. the styleguide toolbar). */
+  /** Show the appearance menu (mode + palette). Off where a page provides its own (e.g. the styleguide toolbar). */
   toggle?: boolean;
 }
 
@@ -14,7 +14,7 @@ const { toggle = true } = Astro.props;
   <Container>
     <div class="rvd-site-header__row">
       <Wordmark first="Buddy" last="Reno" />
-      {toggle && <ThemeToggle />}
+      {toggle && <AppearanceMenu />}
     </div>
   </Container>
 </header>

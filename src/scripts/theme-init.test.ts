@@ -20,6 +20,7 @@ beforeEach(() => {
   localStorage.clear();
   root.removeAttribute('data-rvd-mode');
   root.removeAttribute('data-rvd-theme');
+  root.removeAttribute('data-rvd-mode-pref');
   root.className = '';
   systemDark = false;
   systemListeners = [];
@@ -41,6 +42,15 @@ test('defaults to system mode and the teal-amber theme', () => {
   expect(root.dataset.rvdTheme).toBe('teal-amber');
   expect(root.classList.contains('wa-light')).toBe(true);
   expect(window.rvd.getMode()).toBe('system');
+});
+
+test('data-rvd-mode-pref keeps the choice while data-rvd-mode resolves it', () => {
+  systemDark = true;
+  boot();
+  expect(root.dataset.rvdModePref).toBe('system');
+  expect(root.dataset.rvdMode).toBe('dark');
+  window.rvd.setMode('light');
+  expect(root.dataset.rvdModePref).toBe('light');
 });
 
 test('system mode follows the OS preference, including live changes', () => {

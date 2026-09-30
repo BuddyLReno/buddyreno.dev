@@ -25,6 +25,7 @@ import { email, jobs, quotes, social, work } from '../components/styleguide/samp
 import Swatch from '../components/styleguide/Swatch.astro';
 import Toolbar from '../components/styleguide/Toolbar.astro';
 import TagList from '../components/TagList.astro';
+import AppearanceMenu from '../components/AppearanceMenu.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
 import { TONES } from '../components/types';
 import Base from '../layouts/Base.astro';
@@ -216,6 +217,10 @@ const radii = ['--rvd-radius-sm', '--rvd-radius-md', '--rvd-radius-lg', '--rvd-r
           <TextField label="Company" name="sg-company" optional />
           <TextField label="Message" name="sg-message" rows={3} placeholder="Placeholder text" />
         </Stack>
+      </Example>
+
+      <Example title="AppearanceMenu" props="none" code={`<AppearanceMenu />`}>
+        <AppearanceMenu />
       </Example>
 
       <Example title="ThemeToggle" props="label?" code={`<ThemeToggle />`}>

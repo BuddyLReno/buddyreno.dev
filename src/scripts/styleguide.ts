@@ -33,17 +33,7 @@ function renderAll() {
   renderToneReadouts();
 }
 
-for (const select of document.querySelectorAll<HTMLSelectElement>('[data-rvd-theme-select]')) {
-  select.value = window.rvd.getTheme();
-  select.addEventListener('change', () => window.rvd.setTheme(select.value));
-}
-
-document.addEventListener('rvd:change', (event) => {
-  for (const select of document.querySelectorAll<HTMLSelectElement>('[data-rvd-theme-select]')) {
-    select.value = event.detail.theme;
-  }
-  renderAll();
-});
+document.addEventListener('rvd:change', renderAll);
 
 window.rvdContrastReport = () => contrastReport(document);
 renderAll();

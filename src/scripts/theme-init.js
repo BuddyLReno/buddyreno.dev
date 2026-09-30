@@ -31,6 +31,7 @@
   const apply = () => {
     const dark = resolvedMode() === 'dark';
     root.dataset.rvdMode = dark ? 'dark' : 'light';
+    root.dataset.rvdModePref = mode; // the choice (may be 'system'); rvdMode is what it resolved to
     root.dataset.rvdTheme = theme;
     root.classList.toggle('wa-dark', dark);
     root.classList.toggle('wa-light', !dark);

@@ -1,0 +1,171 @@
+---
+import ModeIcon from './ModeIcon.astro';
+import ThemeToggle from './ThemeToggle.astro';
+
+// Hues come straight from the theme files, so swatches can't drift from the real palettes.
+const files = import.meta.glob<string>('../styles/themes/*.css', { query: '?raw', import: 'default', eager: true });
+const input = (css: string, name: string) => css.match(new RegExp(`--rvd-${name}:\\s*([^;]+);`))?.[1];
+const themes = Object.entries(files)
+  .map(([path, css]) => {
+    const slug = path.split('/').pop()!.replace(/\.css$/, '');
+    const vars = [['h1', input(css, 'hue-1')], ['h2', input(css, 'hue-2')], ['c', input(css, 'accent-c')]];
+    return {
+      slug,
+      name: slug.replace(/(^|-)(\w)/g, (_, dash, c) => (dash ? ' ' : '') + c.toUpperCase()),
+      style: vars.filter(([, v]) => v).map(([k, v]) => `--sw-${k}: ${v}`).join('; '),
+    };
+  })
+  .sort((a, b) => (a.slug === 'teal-amber' ? -1 : b.slug === 'teal-amber' ? 1 : a.slug.localeCompare(b.slug)));
+const id = `rvd-appearance-${Math.random().toString(36).slice(2, 8)}`;
+---
+<div class="rvd-appearance" data-rvd-appearance>
+  <button id={id} type="button" class="rvd-appearance__trigger" aria-label="Appearance">
+    <ModeIcon mode="light" class="rvd-appearance__mode rvd-appearance__mode--light" />
+    <ModeIcon mode="dark" class="rvd-appearance__mode rvd-appearance__mode--dark" />
+    <ModeIcon mode="system" class="rvd-appearance__mode rvd-appearance__mode--system" />
+    <span class="rvd-appearance__swatches" aria-hidden="true"><i></i><i></i><i></i></span>
+    <svg class="rvd-appearance__caret" aria-hidden="true" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
+  </button>
+  <wa-popover for={id} placement="bottom-end" without-arrow class="rvd-appearance__panel">
+    <p class="rvd-appearance__heading type-label-sm" aria-hidden="true">Mode</p>
+    <ThemeToggle />
+    <wa-radio-group label="Palette" class="rvd-appearance__palettes" value={themes[0].slug} data-rvd-palette>
+      {themes.map((theme) => (
+        <wa-radio value={theme.slug}>
+          <span class="rvd-appearance__option">
+            <span class="rvd-appearance__swatches" style={theme.style} aria-hidden="true"><i></i><i></i><i></i></span>
+            {theme.name}
+          </span>
+        </wa-radio>
+      ))}
+    </wa-radio-group>
+  </wa-popover>
+</div>
+
+<script>
+  type RadioGroup = HTMLElement & { value: string | null };
+
+  for (const menu of document.querySelectorAll<HTMLElement>('[data-rvd-appearance]')) {
+    const trigger = menu.querySelector('button')!;
+    const palette = menu.querySelector<RadioGroup>('[data-rvd-palette]')!;
+    const names = new Map(
+      [...palette.querySelectorAll('wa-radio')].map((radio) => [radio.getAttribute('value'), radio.textContent!.trim()]),
+    );
+    const sync = () => {
+      const mode = window.rvd.getMode();
+      palette.value = window.rvd.getTheme();
+      trigger.setAttribute('aria-label', `Appearance: ${mode[0].toUpperCase()}${mode.slice(1)}, ${names.get(palette.value)}`);
+    };
+    palette.addEventListener('change', () => {
+      if (palette.value) window.rvd.setTheme(palette.value);
+    });
+    document.addEventListener('rvd:change', sync);
+    sync();
+  }
+</script>
+
+<style>
+  @layer components {
+    .rvd-appearance__trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 8px 6px 10px;
+      border: 1px solid var(--rvd-line);
+      border-radius: var(--rvd-radius-md);
+      color: var(--rvd-ink);
+      cursor: pointer;
+    }
+
+    .rvd-appearance__trigger:hover {
+      background: var(--rvd-hover);
+    }
+
+    .rvd-appearance__trigger:focus-visible {
+      outline: var(--wa-focus-ring);
+      outline-offset: 2px;
+    }
+
+    .rvd-appearance__caret {
+      color: var(--rvd-muted);
+    }
+
+    /* The icon shows the choice (System stays a monitor), set pre-paint by theme-init.js. */
+    /* :global because ModeIcon renders the svg, outside this component's style scope. */
+    .rvd-appearance__trigger :global(.rvd-appearance__mode) {
+      display: none;
+    }
+
+    :global(:root[data-rvd-mode-pref='light']) .rvd-appearance__trigger :global(.rvd-appearance__mode--light),
+    :global(:root[data-rvd-mode-pref='dark']) .rvd-appearance__trigger :global(.rvd-appearance__mode--dark),
+    :global(:root[data-rvd-mode-pref='system']) .rvd-appearance__trigger :global(.rvd-appearance__mode--system) {
+      display: block;
+    }
+
+    /* Segments share the panel width instead of huddling left. */
+    .rvd-appearance__panel :global(.rvd-theme-toggle wa-radio) {
+      flex: 1;
+      justify-content: center;
+    }
+
+    /* Accent, accent-2, band: the same formulas as tokens.css. Without --sw-* (the trigger) they
+       fall back to the live palette; menu options set --sw-* from their theme file. */
+    .rvd-appearance__swatches {
+      display: inline-flex;
+      gap: 2px;
+    }
+
+    .rvd-appearance__swatches i {
+      width: 12px;
+      height: 12px;
+      border-radius: 2px;
+      background: oklch(var(--rvd-accent-l) var(--sw-c, var(--rvd-accent-c)) var(--sw-h1, var(--rvd-hue-1)));
+    }
+
+    .rvd-appearance__swatches i:nth-child(2) {
+      background: oklch(var(--rvd-accent-l) var(--sw-c, var(--rvd-accent-c)) var(--sw-h2, var(--rvd-hue-2)));
+    }
+
+    .rvd-appearance__swatches i:nth-child(3) {
+      background: oklch(var(--rvd-band-l) var(--rvd-band-c) var(--sw-h1, var(--rvd-hue-1)));
+    }
+
+    /* Raised surface, not the page background. */
+    .rvd-appearance__panel::part(body) {
+      display: grid;
+      background-color: var(--rvd-surface);
+      gap: 8px;
+      padding: 14px 16px 16px;
+    }
+
+    .rvd-appearance__heading {
+      margin: 0;
+      color: var(--rvd-muted);
+    }
+
+    .rvd-appearance__palettes {
+      margin-top: 8px;
+    }
+
+    .rvd-appearance__palettes::part(form-control-label) {
+      margin-bottom: 6px;
+      color: var(--rvd-muted);
+      font-family: var(--rvd-font-mono);
+      font-size: var(--rvd-text-label-sm);
+      text-transform: uppercase;
+    }
+
+    .rvd-appearance__palettes wa-radio {
+      margin: 0;
+      padding-block: 4px;
+    }
+
+    .rvd-appearance__option {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--rvd-ink);
+      font-size: var(--rvd-text-body-sm);
+    }
+  }
+</style>

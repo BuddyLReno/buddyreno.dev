@@ -12,7 +12,8 @@ every piece live at `/styleguide/` (`npm run dev`).
   They set only `--rvd-hue-1`, `--rvd-hue-2` and `--rvd-accent-c`. Current names are working names until LOTR
   names are picked. To add or rename a theme, change the file in `src/styles/themes/` and the `THEMES` list
   in `src/scripts/theme-init.js`. Adding one takes three edits: the file, an `@import` in `global.css`, and
-  the `THEMES` entry; a test catches each omission. The styleguide picks up theme files automatically.
+  the `THEMES` entry; a test catches each omission. `AppearanceMenu` (names and swatches) picks up theme
+  files automatically.
 - **Mode** (`data-rvd-mode="light|dark"`) is set before first paint by the inlined `theme-init.js`.
   Use `window.rvd.setMode()` / `setTheme()` and listen for `rvd:change`.
 
@@ -42,7 +43,8 @@ every piece live at `/styleguide/` (`npm run dev`).
 | `Quote` | Testimonials. |
 | `Button` (`appearance="primary\|quiet"`, `sub` slot), `CopyEmail` | Actions. |
 | `TextField` (`rows` for a textarea, `optional`), `ChoicePills` | Forms (Contact). Native inputs; borders use `--rvd-control-line` (3:1). |
-| `StatusDot`, `SocialLinks`, `TagList`, `Wordmark`, `ThemeToggle` | As named. |
+| `AppearanceMenu` | Header (and styleguide toolbar) control: a trigger showing the chosen mode icon + palette swatches, opening a `wa-popover` with `ThemeToggle` and a palette radio group. |
+| `StatusDot`, `SocialLinks`, `TagList`, `Wordmark`, `ThemeToggle` (icon segments, `ModeIcon`) | As named. |
 | `Avatar` (`src`, `label`) | Takes a string: `import me from '../assets/images/me_bw.jpg'`, then `src={me.src}`. Not optimized (`wa-avatar` bypasses `astro:assets`). |
 | `Prose`, `PostMeta`, `PostList`, `ProjectHeader` | Long-form. |
 | Layouts `Base`, `Page`, `Post`, `Project` | Pages. Content lives in `src/content/{posts,projects,pages}`. `Base` has `header` and `footer` named slots (defaults `SiteHeader`/`SiteFooter`). |
