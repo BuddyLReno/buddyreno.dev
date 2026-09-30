@@ -25,9 +25,9 @@ export const contact = {
     send: "Your message didn't send on my end. Please try again in a bit.",
   },
   messageMinLength: 12,
-  // Turnstile public site key (safe to commit). This is Cloudflare's always-pass test key until
-  // the real widget exists: Cloudflare dashboard → Turnstile → Add widget for buddyreno.dev.
-  turnstileSiteKey: '1x00000000000000000000AA',
+  // Turnstile public site key (safe to commit); the secret lives in the Worker. Invisible mode.
+  // Local dev can't pass this key on localhost; use Cloudflare's test key 1x00000000000000000000AA there.
+  turnstileSiteKey: '0x4AAAAAAFJs8A6F7asuN4jl',
   thanks: {
     title: 'Thanks',
     body: "Your message is on its way. I'll get back to you soon.",
