@@ -58,3 +58,12 @@ test('Base fixes the cascade layer order before any stylesheet', async () => {
     .map((name) => name.trim());
   expect(order).toEqual([...waLayers, 'properties', 'theme', 'base', 'components', 'utilities']);
 });
+
+test('the body fills the viewport and main grows, so the footer sits at the bottom on short pages', () => {
+  const css = readFileSync(resolve('src/styles/base.css'), 'utf8');
+  const body = css.match(/\n  body \{[^}]*\}/)?.[0] ?? '';
+  expect(body).toMatch(/display: flex;/);
+  expect(body).toMatch(/flex-direction: column;/);
+  expect(body).toMatch(/min-height: 100dvh;/);
+  expect(css).toMatch(/\n  main \{[^}]*flex: 1 0 auto;[^}]*\}/);
+});

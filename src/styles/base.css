@@ -8,7 +8,12 @@
     border-color: var(--rvd-line);
   }
 
+  /* Column layout so main can grow and the footer sits at the bottom of short pages. */
   body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100dvh;
     margin: 0;
     background-color: var(--rvd-bg);
     color: var(--rvd-ink);
@@ -20,6 +25,10 @@
     transition:
       background-color var(--rvd-dur-theme),
       color var(--rvd-dur-theme);
+  }
+
+  main {
+    flex: 1 0 auto;
   }
 
   p {
