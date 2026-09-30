@@ -1,0 +1,15 @@
+// Contact form Worker. Deploy: npm run worker:deploy
+// Secrets (set once, never committed):
+//   npx wrangler secret put CONTACT_TO -c worker/wrangler.jsonc        (your verified destination address)
+//   npx wrangler secret put TURNSTILE_SECRET -c worker/wrangler.jsonc  (Turnstile widget secret key)
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  "name": "buddyreno-contact",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-29",
+  // Only this path reaches the Worker; everything else on buddyreno.dev goes to GitHub Pages.
+  "routes": [{ "pattern": "buddyreno.dev/api/contact", "zone_name": "buddyreno.dev" }],
+  "send_email": [{ "name": "EMAIL" }],
+  "vars": { "CONTACT_FROM": "contact@buddyreno.dev" },
+  "observability": { "enabled": true }
+}

@@ -39,6 +39,7 @@ const defaultHint = contact.reasons.find((r) => r.value === contact.defaultReaso
           </div>
           <TextField label="Company" name="company" autocomplete="organization" optional />
           <TextField label="Message" name="message" rows={6} minlength={contact.messageMinLength} placeholder={defaultHint} required />
+          <div class="cf-turnstile" data-sitekey={contact.turnstileSiteKey} data-theme="auto" data-size="flexible"></div>
           <p class="rvd-contact-form__error type-body-sm" role="alert" data-rvd-contact-error hidden></p>
           <div class="flex flex-wrap items-center gap-x-5 gap-y-3">
             <Button type="submit">{contact.submit}</Button>
@@ -52,17 +53,28 @@ const defaultHint = contact.reasons.find((r) => r.value === contact.defaultReaso
   </Section>
 </Base>
 
+<script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
 <script>
   const form = document.querySelector<HTMLFormElement>('[data-rvd-contact-form]');
   if (form) {
     // Friendly checks instead of the browser's bubbles; the Worker re-validates everything.
     form.noValidate = true;
-    const errors: Record<'name' | 'email' | 'message', string> = JSON.parse(form.dataset.errors ?? '{}');
+    const errors: Record<string, string> = JSON.parse(form.dataset.errors ?? '{}');
     const minLength = Number(form.dataset.minLength) || 1;
     const errorBox = form.querySelector<HTMLElement>('[data-rvd-contact-error]')!;
     const field = (name: string) => form.elements.namedItem(name) as HTMLInputElement | HTMLTextAreaElement;
     const submit = form.querySelector<HTMLElement & { disabled: boolean }>('[type="submit"]');
     const submitLabel = submit?.textContent ?? '';
+    const showError = (text: string, focus?: HTMLElement) => {
+      errorBox.textContent = text;
+      errorBox.hidden = false;
+      focus?.focus();
+    };
+
+    // The Worker redirects back with ?error=invalid|verify|send when something fails.
+    const returned = new URLSearchParams(location.search).get('error');
+    if (returned && errors[returned]) showError(errors[returned]);
 
     // Each reason swaps in its own message hint.
     form.addEventListener('change', (event) => {
@@ -80,9 +92,13 @@ const defaultHint = contact.reasons.find((r) => r.value === contact.defaultReaso
             : null;
       if (problem) {
         event.preventDefault();
-        errorBox.textContent = problem[1];
-        errorBox.hidden = false;
-        field(problem[0]).focus();
+        showError(problem[1], field(problem[0]));
+        return;
+      }
+      // Turnstile adds this hidden field once its check passes.
+      if (!(form.elements.namedItem('cf-turnstile-response') as HTMLInputElement | null)?.value) {
+        event.preventDefault();
+        showError(errors.turnstile);
         return;
       }
       errorBox.hidden = true;

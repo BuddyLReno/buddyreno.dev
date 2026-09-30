@@ -4,3 +4,8 @@ dist/
 screenshots/
 .DS_Store
 .superpowers/
+
+# Worker local secrets and state
+worker/.dev.vars
+.wrangler/
+worker/.wrangler/

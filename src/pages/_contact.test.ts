@@ -39,3 +39,15 @@ test('the thanks page is not indexed', async () => {
   const html = await render(Thanks);
   expect(html).toContain('<meta name="robots" content="noindex">');
 });
+
+test('the form carries a Turnstile widget and loads its script', async () => {
+  const html = await render(Contact);
+  expect(html).toMatch(new RegExp(`class="cf-turnstile"[^>]*data-sitekey="${contact.turnstileSiteKey}"`));
+  expect(html).toContain('src="https://challenges.cloudflare.com/turnstile/v0/api.js"');
+});
+
+test('every error the Worker can redirect with has a message on the page', () => {
+  for (const reason of ['invalid', 'verify', 'send'] as const) {
+    expect(contact.errors[reason]).toBeTruthy();
+  }
+});

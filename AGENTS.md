@@ -24,6 +24,8 @@ piece live at `/styleguide/`.
 | `npm run build` | Static build to `dist/` |
 | `npm run contrast` | Builds, then checks WCAG AA for every theme × mode × tone in Chromium (Playwright) |
 | `npm run screenshots` | Builds, then writes styleguide screenshots to `screenshots/` (gitignored) |
+| `npm run worker:dev` | Contact form Worker locally (reads `worker/.dev.vars`, gitignored; use Turnstile test keys) |
+| `npm run worker:deploy` | Deploys the contact Worker to Cloudflare (route `buddyreno.dev/api/contact`) |
 
 **Definition of done** for any change: `npm test`, `npx astro check`, and, for anything touching color,
 tokens, tones, or components, `npm run contrast`, all green. Add or update tests with the change.
@@ -41,6 +43,7 @@ src/content/       posts/, projects/, pages/ (Markdown/MDX); schema in src/conte
 src/scripts/       theme-init.js (inlined, blocking theme/mode runtime → window.rvd), webawesome.ts
 src/lib/           contrast, format (dates, reading time), content (drafts), schema (httpUrl)
 scripts/           check-contrast.mjs, screenshots.mjs, lib/preview.mjs
+worker/            Cloudflare Worker for /api/contact (Turnstile + Email Routing); shares src/data/contact.ts
 docs/superpowers/  design spec and implementation plan (history; the spec explains the "why")
 ```
 
